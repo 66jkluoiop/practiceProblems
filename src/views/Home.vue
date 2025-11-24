@@ -6,7 +6,7 @@
       <div class="header">
         <div class="header-content">
           <h1 class="title">在线刷题</h1>
-          <p class="desc">精选 {{ filteredQuestions.length }} 道题目，助你提升技能</p>
+          <p class="desc">精选 {{ headerCount }} 道题目，助你提升技能</p>
         </div>
         <div class="header-actions">
           <button class="icon-btn" @click="router.push('/wrong-questions')" title="错题本">
@@ -184,6 +184,11 @@ const availableBanks = computed(() => banksIndex.value.map(b => ({
   file: b.file
 })))
 
+const headerCount = computed(() => {
+  if (selectedBank.value) return bankCounts.value[selectedBank.value] ?? 0
+  return Object.values(bankCounts.value).reduce((a, b) => a + b, 0)
+})
+
 const canStart = computed(() => {
   const name = selectedBank.value
   if (!name) return false
@@ -198,17 +203,6 @@ const currentBankName = computed(() => {
   }
   const bank = availableBanks.value.find(b => b.value === selectedBank.value)
   return bank ? `${bank.icon} ${bank.name} (${bank.count}题)` : '选择题库'
-})
-
-// 根据题库和筛选条件过滤题目
-const filteredQuestions = computed(() => {
-  return state.value.questions.filter(q => {
-    // 题库筛选
-    const bankMatch = !selectedBank.value || (q.bank || '未分类') === selectedBank.value
-    // 难度筛选
-    const difficultyMatch = selectedDifficulty.value === 'all' || q.difficulty === selectedDifficulty.value
-    return bankMatch && difficultyMatch
-  })
 })
 
 // 选择题库
