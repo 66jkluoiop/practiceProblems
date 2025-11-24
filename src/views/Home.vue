@@ -62,7 +62,7 @@
       <div class="grid">
         <!-- 题库卡片 -->
         <div class="card">
-          <div class="card-title">📚 题库</div>
+          <div class="card-title">题库</div>
           <div class="bank-selector">
             <button class="dropdown-trigger" @click="showBankDropdown = !showBankDropdown">
               <span>{{ currentBankName }}</span>
@@ -80,7 +80,7 @@
 
         <!-- 模式卡片 -->
         <div class="card">
-          <div class="card-title">⚙️ 模式</div>
+          <div class="card-title">模式</div>
           <div class="radio-group">
             <label class="radio-item">
               <input type="radio" value="practice" v-model="quizMode" />
@@ -95,7 +95,7 @@
 
         <!-- 难度卡片 -->
         <div class="card">
-          <div class="card-title">📊 难度</div>
+          <div class="card-title">难度</div>
           <div class="tags">
             <button v-for="diff in difficulties" :key="diff.value"
               :class="['tag', { selected: selectedDifficulty === diff.value }]"

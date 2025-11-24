@@ -87,11 +87,15 @@
         <div class="sidebar-panel">
           <div class="sidebar-title">题号</div>
           <div class="pager">
-            <button class="pager-btn" @click="toFirstPage" :disabled="pageIndex === 0">首页</button>
-            <button class="pager-btn" @click="toPrevPage" :disabled="pageIndex === 0">上一页</button>
+            <div class="pager-col">
+              <button class="pager-btn" @click="toFirstPage" :disabled="pageIndex === 0">首页</button>
+              <button class="pager-btn" @click="toPrevPage" :disabled="pageIndex === 0">上一页</button>
+            </div>
             <span class="pager-info">第 {{ pageIndex + 1 }} / {{ totalPages }} 页</span>
-            <button class="pager-btn" @click="toNextPage" :disabled="pageIndex >= totalPages - 1">下一页</button>
-            <button class="pager-btn" @click="toLastPage" :disabled="pageIndex >= totalPages - 1">末页</button>
+            <div class="pager-col">
+              <button class="pager-btn" @click="toLastPage" :disabled="pageIndex >= totalPages - 1">末页</button>
+              <button class="pager-btn" @click="toNextPage" :disabled="pageIndex >= totalPages - 1">下一页</button>
+            </div>
           </div>
           <div class="page-list">
             <button v-for="p in pageRange" :key="p" class="page-num" :class="{ active: p === pageIndex }"
@@ -471,6 +475,12 @@ const handleBack = () => {
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
+}
+
+.pager-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .pager-btn {
