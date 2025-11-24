@@ -2,7 +2,7 @@
   <div class="quiz" v-if="currentQuestion" ref="quizContainer">
     <LoadingSpinner v-if="isLoading" isOverlay />
     <header class="quiz-header">
-      <button class="back-btn" @click="showConfirmDialog">← 返回</button>
+      <button class="back-btn" @click="showConfirmDialog">返回</button>
       <div class="mode-badge" :class="`mode-${state.mode}`">
         {{ state.mode === 'memorize' ? '📝 背题模式' : '✏️ 练习模式' }}
       </div>
@@ -42,13 +42,13 @@
 
           <div class="actions">
             <button class="btn btn-secondary" @click="handlePrev" :disabled="isFirstQuestion">
-              ← 上一题
+              上一题
             </button>
 
             <template v-if="isMemorizeMode">
               <!-- 背题模式：直接显示下一题按钮 -->
               <button class="btn btn-primary" @click="handleNext">
-                {{ isLastQuestion ? '查看结果' : '下一题 →' }}
+                {{ isLastQuestion ? '查看结果' : '下一题' }}
               </button>
             </template>
 
@@ -59,12 +59,12 @@
               </button>
               <button class="btn btn-secondary" @click="handleReveal">显示答案</button>
               <button class="btn btn-secondary" @click="handleSkip" :disabled="isLastQuestion">
-                跳过 →
+                跳过
               </button>
             </template>
 
             <button v-else class="btn btn-primary" @click="handleNext">
-              {{ isLastQuestion ? '查看结果' : '下一题 →' }}
+              {{ isLastQuestion ? '查看结果' : '下一题' }}
             </button>
           </div>
 
@@ -84,27 +84,35 @@
         </div>
       </div>
       <aside class="sidebar">
-        <div class="sidebar-title">题号</div>
-        <div class="pager">
-          <button class="pager-btn" @click="toFirstPage" :disabled="pageIndex === 0">首页</button>
-          <button class="pager-btn" @click="toPrevPage" :disabled="pageIndex === 0">上一页</button>
-          <span class="pager-info">第 {{ pageIndex + 1 }} / {{ totalPages }} 页</span>
-          <button class="pager-btn" @click="toNextPage" :disabled="pageIndex >= totalPages - 1">下一页</button>
-          <button class="pager-btn" @click="toLastPage" :disabled="pageIndex >= totalPages - 1">末页</button>
-        </div>
-        <div class="page-list">
-          <button v-for="p in pageRange" :key="p" class="page-num" :class="{ active: p === pageIndex }"
-            @click="setPage(p)">{{
-              p + 1 }}</button>
-        </div>
-        <div class="jump">
-          <input class="jump-input" v-model="pageInput" type="number" min="1" :max="totalPages" placeholder="页码" />
-          <button class="pager-btn" @click="gotoInputPage" :disabled="!pageInput">跳转</button>
-        </div>
-        <div class="number-grid">
-          <button v-for="i in pageItems" :key="i" class="number-item"
-            :class="{ current: i === state.currentIndex, answered: isAnswered(i), correct: isCorrect(i), wrong: isWrong(i), peeked: isPeeked(i) }"
-            @click="jumpTo(i)">{{ i + 1 }}</button>
+        <div class="sidebar-panel">
+          <div class="sidebar-title">题号</div>
+          <div class="pager">
+            <button class="pager-btn" @click="toFirstPage" :disabled="pageIndex === 0">首页</button>
+            <button class="pager-btn" @click="toPrevPage" :disabled="pageIndex === 0">上一页</button>
+            <span class="pager-info">第 {{ pageIndex + 1 }} / {{ totalPages }} 页</span>
+            <button class="pager-btn" @click="toNextPage" :disabled="pageIndex >= totalPages - 1">下一页</button>
+            <button class="pager-btn" @click="toLastPage" :disabled="pageIndex >= totalPages - 1">末页</button>
+          </div>
+          <div class="page-list">
+            <button v-for="p in pageRange" :key="p" class="page-num" :class="{ active: p === pageIndex }"
+              @click="setPage(p)">{{
+                p + 1 }}</button>
+          </div>
+          <div class="jump">
+            <input class="jump-input" v-model="pageInput" type="number" min="1" :max="totalPages" placeholder="页码" />
+            <button class="pager-btn" @click="gotoInputPage" :disabled="!pageInput">跳转</button>
+          </div>
+          <div class="number-grid">
+            <button v-for="i in pageItems" :key="i" class="number-item"
+              :class="{ current: i === state.currentIndex, answered: isAnswered(i), correct: isCorrect(i), wrong: isWrong(i), peeked: isPeeked(i) }"
+              @click="jumpTo(i)">{{ i + 1 }}</button>
+          </div>
+          <div class="legend">
+            <span class="legend-item correct">正确</span>
+            <span class="legend-item wrong">错误</span>
+            <span class="legend-item peeked">已查看</span>
+            <span class="legend-item unanswered">未查看</span>
+          </div>
         </div>
       </aside>
     </div>
@@ -439,8 +447,18 @@ const handleBack = () => {
 
 .sidebar {
   width: 100%;
-  border-left: 1px solid #eee;
-  padding-left: 16px;
+  padding-left: 0;
+  position: sticky;
+  top: 20px;
+  align-self: start;
+}
+
+.sidebar-panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .sidebar-title {
@@ -510,14 +528,16 @@ const handleBack = () => {
 }
 
 .number-item {
-  padding: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 10px 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
   background: #fff;
+  transition: all 0.15s ease;
 }
 
 .number-item.current {
-  border-color: #111;
+  border-color: #111827;
+  background: #f3f4f6;
 }
 
 .number-item.answered {
@@ -529,13 +549,57 @@ const handleBack = () => {
   background: #f0fdf4;
   border-color: #22c55e;
 }
+
 .number-item.wrong {
   background: #fef2f2;
   border-color: #ef4444;
 }
+
 .number-item.peeked {
   background: #fef3c7;
   border-color: #f59e0b;
+}
+
+.number-item:hover {
+  border-color: #9ca3af;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.legend {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #fff;
+}
+
+.legend-item.correct {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.legend-item.wrong {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.legend-item.peeked {
+  border-color: #f59e0b;
+  background: #fef3c7;
+}
+
+.legend-item.unanswered {
+  border-color: #e5e7eb;
+  background: #f8f9fa;
 }
 
 .text-answer {
@@ -568,10 +632,7 @@ const handleBack = () => {
   }
 
   .sidebar {
-    border-left: none;
-    border-top: 1px solid #eee;
-    padding-left: 0;
-    padding-top: 16px;
+    padding-top: 0;
   }
 }
 </style>

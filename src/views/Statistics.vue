@@ -4,7 +4,7 @@
         <div class="wrapper" :class="{ 'content-loading': isLoading }">
             <!-- 头部 -->
             <div class="header">
-                <button class="back-btn" @click="router.push('/')">← 返回</button>
+                <button class="back-btn" @click="router.push('/')">返回</button>
                 <h1 class="title">学习统计</h1>
                 <button class="clear-btn" @click="handleClear" v-if="stats.totalQuizzes > 0">
                     清空数据

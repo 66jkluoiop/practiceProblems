@@ -9,15 +9,11 @@
           <p class="desc">精选 {{ headerCount }} 道题目，助你提升技能</p>
         </div>
         <div class="header-actions">
-          <button class="icon-btn" @click="router.push('/wrong-questions')" title="错题本">
-            📝 <span class="badge" v-if="wrongQuestions.length > 0">{{ wrongQuestions.length }}</span>
+          <button class="header-link" @click="router.push('/wrong-questions')" title="错题本">
+            错题本 <span class="badge" v-if="wrongQuestions.length > 0">{{ wrongQuestions.length }}</span>
           </button>
-          <button class="icon-btn" @click="router.push('/statistics')" title="学习统计">
-            📊
-          </button>
-          <button class="icon-btn" @click="toggleDarkMode" title="切换主题">
-            {{ isDark ? '🌙' : '☀️' }}
-          </button>
+          <button class="header-link" @click="router.push('/statistics')" title="学习统计">学习统计</button>
+          <button class="header-link" @click="toggleDarkMode" title="切换主题">{{ isDark ? '暗黑' : '明亮' }}</button>
         </div>
       </div>
       <div class="resume-grid" :class="{ two: practiceSaved && memorizeSaved }">
@@ -56,8 +52,8 @@
             </div>
           </div>
           <div class="resume-right">
-            <button class="text-btn" @click="handleDeleteProgress('memorize')">删除</button>
             <button class="solid-btn" @click="handleResume('memorize')">继续</button>
+            <button class="text-btn" @click="handleDeleteProgress('memorize')">删除</button>
           </div>
         </div>
       </div>
@@ -112,7 +108,7 @@
 
       <!-- 开始按钮 -->
       <button class="start-btn" @click="handleStart" :disabled="!canStart">
-        开始答题 →
+        开始答题
       </button>
     </div>
   </div>
@@ -787,5 +783,39 @@ onActivated(() => {
     width: 100%;
     max-width: none;
   }
+}
+
+.header-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.header-link:hover {
+  background: #f8f9fa;
+  border-color: #d1d5db;
+}
+
+.header-link .badge {
+  margin-left: 4px;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #dc3545;
+  color: white;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 6px;
 }
 </style>
