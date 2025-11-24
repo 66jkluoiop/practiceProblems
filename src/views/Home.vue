@@ -23,10 +23,15 @@
       <!-- 继续答题卡片 -->
       <div v-if="hasSaved" class="resume-card">
         <div class="resume-left">
-          <div class="resume-icon">📌</div>
           <div>
             <h3>继续答题</h3>
             <p>上次进度已保存</p>
+            <div class="resume-progress">
+              <div class="resume-progress-bar">
+                <div class="resume-progress-fill" :style="{ width: resumePercent + '%' }"></div>
+              </div>
+              <div class="resume-progress-text">已完成 {{ completedCount }} / {{ totalCount }}</div>
+            </div>
           </div>
         </div>
         <div class="resume-right">
@@ -117,6 +122,10 @@ const deleteDialogRef = ref<InstanceType<typeof ConfirmDialog> | null>(null)
 
 // 是否有保存的进度
 const hasSaved = ref(false)
+
+const completedCount = computed(() => state.value.userAnswers.length)
+const totalCount = computed(() => state.value.questions.length)
+const resumePercent = computed(() => totalCount.value > 0 ? Math.round((completedCount.value / totalCount.value) * 100) : 0)
 
 // 题库选择
 const selectedBank = ref('')
@@ -246,6 +255,45 @@ onActivated(() => {
 </script>
 
 <style scoped>
+.resume-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.resume-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.resume-right {
+  display: flex;
+  gap: 8px;
+}
+.resume-progress {
+  margin-top: 8px;
+}
+.resume-progress-bar {
+  width: 240px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.resume-progress-fill {
+  height: 100%;
+  background: #111827;
+}
+.resume-progress-text {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #374151;
+}
 .page {
   min-height: 100vh;
   background: #f0f2f5;
@@ -328,15 +376,16 @@ onActivated(() => {
 
 /* 继续答题卡片 */
 .resume-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 16px;
-  padding: 24px 28px;
+  padding: 20px;
   margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white;
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  color: #1f2937;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .resume-left {
@@ -345,9 +394,6 @@ onActivated(() => {
   gap: 16px;
 }
 
-.resume-icon {
-  font-size: 32px;
-}
 
 .resume-left h3 {
   font-size: 18px;
@@ -571,7 +617,7 @@ onActivated(() => {
 .solid-btn {
   padding: 10px 20px;
   background: white;
-  color: #667eea;
+  color: #1f2937;
   border: none;
   border-radius: 8px;
   font-size: 14px;
@@ -587,8 +633,8 @@ onActivated(() => {
 .text-btn {
   padding: 10px 20px;
   background: transparent;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
@@ -596,8 +642,8 @@ onActivated(() => {
 }
 
 .text-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: #f3f4f6;
+  border-color: #d1d5db;
 }
 
 /* 加载状态 */
