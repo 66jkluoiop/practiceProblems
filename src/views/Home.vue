@@ -20,24 +20,46 @@
           </button>
         </div>
       </div>
-      <!-- 继续答题卡片 -->
-      <div v-if="hasSaved" class="resume-card">
+      <div class="resume-grid" :class="{ two: practiceSaved && memorizeSaved }">
+      <!-- 继续练习 -->
+      <div v-if="practiceSaved" class="resume-card">
         <div class="resume-left">
           <div>
-            <h3>继续答题</h3>
-            <p>上次进度已保存</p>
+            <h3>继续练习</h3>
+            <p>练习模式进度已保存</p>
             <div class="resume-progress">
               <div class="resume-progress-bar">
-                <div class="resume-progress-fill" :style="{ width: resumePercent + '%' }"></div>
+                <div class="resume-progress-fill" :style="{ width: practicePercent + '%' }"></div>
               </div>
-              <div class="resume-progress-text">已完成 {{ completedCount }} / {{ totalCount }}</div>
+              <div class="resume-progress-text">已完成 {{ practiceCompleted }} / {{ practiceTotal }}</div>
             </div>
           </div>
         </div>
         <div class="resume-right">
-          <button class="text-btn" @click="handleDeleteProgress">删除</button>
-          <button class="solid-btn" @click="handleResume">继续</button>
+          <button class="text-btn" @click="handleDeleteProgress('practice')">删除</button>
+          <button class="solid-btn" @click="handleResume('practice')">继续</button>
         </div>
+      </div>
+
+      <!-- 继续背题 -->
+      <div v-if="memorizeSaved" class="resume-card">
+        <div class="resume-left">
+          <div>
+            <h3>继续背题</h3>
+            <p>背题模式进度已保存</p>
+            <div class="resume-progress">
+              <div class="resume-progress-bar">
+                <div class="resume-progress-fill" :style="{ width: memorizePercent + '%' }"></div>
+              </div>
+              <div class="resume-progress-text">已背 {{ memorizeIndex }} / {{ memorizeTotal }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="resume-right">
+          <button class="text-btn" @click="handleDeleteProgress('memorize')">删除</button>
+          <button class="solid-btn" @click="handleResume('memorize')">继续</button>
+        </div>
+      </div>
       </div>
 
       <!-- 网格布局 -->
@@ -110,7 +132,7 @@ import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const router = useRouter()
-const { state, loadQuestions, startQuiz, resumeQuiz, hasSavedProgress, resetQuiz } = useQuiz()
+const { state, loadQuestions, startQuiz, resumeByMode, clearProgress } = useQuiz()
 const { wrongQuestions } = useWrongQuestions()
 const { isDark, toggleDarkMode } = useDarkMode()
 
@@ -121,11 +143,18 @@ const isLoading = ref(true)
 const deleteDialogRef = ref<InstanceType<typeof ConfirmDialog> | null>(null)
 
 // 是否有保存的进度
-const hasSaved = ref(false)
+const practiceSaved = ref(false)
+const memorizeSaved = ref(false)
+const practiceCompleted = ref(0)
+const practiceTotal = ref(0)
+const practicePercent = computed(() => practiceTotal.value > 0 ? Math.round((practiceCompleted.value / practiceTotal.value) * 100) : 0)
+const memorizeIndex = ref(0)
+const memorizeTotal = ref(0)
+const memorizePercent = computed(() => memorizeTotal.value > 0 ? Math.round((memorizeIndex.value / memorizeTotal.value) * 100) : 0)
 
-const completedCount = computed(() => state.value.userAnswers.length)
-const totalCount = computed(() => state.value.questions.length)
-const resumePercent = computed(() => totalCount.value > 0 ? Math.round((completedCount.value / totalCount.value) * 100) : 0)
+// 当前状态统计（备用，可能未用）
+// const completedCount = computed(() => state.value.userAnswers.length)
+// const totalCount = computed(() => state.value.questions.length)
 
 // 题库选择
 const selectedBank = ref('')
@@ -191,20 +220,33 @@ const handleStart = () => {
 }
 
 // 继续答题
-const handleResume = () => {
-  resumeQuiz()
+const handleResume = (mode: 'practice' | 'memorize') => {
+  resumeByMode(mode)
   router.push('/quiz')
 }
 
 // 显示删除确认对话框
-const handleDeleteProgress = () => {
+const pendingDeleteMode = ref<'practice' | 'memorize' | null>(null)
+const handleDeleteProgress = (mode: 'practice' | 'memorize') => {
+  pendingDeleteMode.value = mode
   deleteDialogRef.value?.show()
 }
 
 // 确认删除进度
 const confirmDelete = () => {
-  resetQuiz() // 重置答题状态并清除 localStorage
-  hasSaved.value = false
+  if (pendingDeleteMode.value) {
+    clearProgress(pendingDeleteMode.value)
+    if (pendingDeleteMode.value === 'practice') {
+      practiceSaved.value = false
+      practiceCompleted.value = 0
+      practiceTotal.value = 0
+    } else {
+      memorizeSaved.value = false
+      memorizeIndex.value = 0
+      memorizeTotal.value = 0
+    }
+    pendingDeleteMode.value = null
+  }
 }
 
 // 加载题目数据
@@ -227,25 +269,31 @@ onMounted(async () => {
 
 // 检查保存的进度（每次进入页面都检查）
 const checkSavedProgress = () => {
-  // 先检查 localStorage 中的原始数据
-  const rawData = localStorage.getItem('quiz_progress')
-  if (rawData) {
-    try {
-      const data = JSON.parse(rawData)
-      // 如果有 endTime，说明是已完成的答题，直接清除
-      if (data.endTime) {
-        localStorage.removeItem('quiz_progress')
-        hasSaved.value = false
-        return
+  // 分别检查两种模式
+  const rawPractice = localStorage.getItem('quiz_progress_practice')
+  const rawMemorize = localStorage.getItem('quiz_progress_memorize')
+  practiceSaved.value = false
+  memorizeSaved.value = false
+  try {
+    if (rawPractice) {
+      const data = JSON.parse(rawPractice)
+      if (!data.endTime && Array.isArray(data.questions)) {
+        practiceSaved.value = data.questions.length > 0
+        practiceCompleted.value = Array.isArray(data.userAnswers) ? data.userAnswers.length : 0
+        practiceTotal.value = data.questions.length
       }
-    } catch (e) {
-      // 数据格式错误，清除
-      localStorage.removeItem('quiz_progress')
-      hasSaved.value = false
-      return
     }
-  }
-  hasSaved.value = hasSavedProgress()
+  } catch {}
+  try {
+    if (rawMemorize) {
+      const data = JSON.parse(rawMemorize)
+      if (!data.endTime && Array.isArray(data.questions)) {
+        memorizeSaved.value = data.questions.length > 0
+        memorizeIndex.value = typeof data.currentIndex === 'number' ? data.currentIndex : 0
+        memorizeTotal.value = data.questions.length
+      }
+    }
+  } catch {}
 }
 
 // 监听路由变化，返回首页时重新检查
@@ -265,6 +313,11 @@ onActivated(() => {
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.resume-grid.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 .resume-left {
   display: flex;
@@ -674,6 +727,10 @@ onActivated(() => {
   .resume-card {
     flex-direction: column;
     align-items: flex-start;
+    gap: 20px;
+  }
+  .resume-grid.two {
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 

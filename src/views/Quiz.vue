@@ -111,8 +111,8 @@
   </div>
 
   <!-- 自定义确认对话框 -->
-  <ConfirmDialog ref="confirmDialogRef" title="退出答题" message="确定要退出答题吗？当前进度已自动保存，下次可以继续。" confirm-text="退出"
-    cancel-text="继续答题" @confirm="handleBack" />
+  <ConfirmDialog ref="confirmDialogRef" :title="exitTitle" :message="exitMessage" :confirm-text="exitConfirm"
+    :cancel-text="exitCancel" @confirm="handleBack" />
 </template>
 
 <script setup lang="ts">
@@ -410,6 +410,11 @@ const formatTextAnswer = (ans: number | number[] | string | string[]) => {
   }
   return String(ans)
 }
+
+const exitTitle = computed(() => state.value.mode === 'memorize' ? '退出背题' : '退出练习')
+const exitMessage = computed(() => state.value.mode === 'memorize' ? '确定要退出背题吗？进度已保存，下次可继续。' : '确定要退出练习吗？进度已保存，下次可继续。')
+const exitConfirm = '退出'
+const exitCancel = computed(() => state.value.mode === 'memorize' ? '继续背题' : '继续练习')
 
 // 显示确认对话框
 const showConfirmDialog = () => {

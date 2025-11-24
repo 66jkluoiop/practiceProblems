@@ -4,6 +4,9 @@ import type { Question, UserAnswer, QuizState } from '@/types'
 
 // LocalStorage 键名
 const STORAGE_KEY = 'quiz_progress'
+const KEY_PRACTICE = 'quiz_progress_practice'
+const KEY_MEMORIZE = 'quiz_progress_memorize'
+const getKeyForMode = (mode: 'practice' | 'memorize') => (mode === 'memorize' ? KEY_MEMORIZE : KEY_PRACTICE)
 
 // 全局答题状态
 const state = ref<QuizState>({
@@ -18,13 +21,16 @@ const saveProgress = () => {
     // 只有在答题进行中才保存（有答案记录或不在第一题）
     const isInProgress = state.value.userAnswers.length > 0 || state.value.currentIndex > 0 || state.value.startTime > 0
     if (state.value.questions.length > 0 && !state.value.endTime && isInProgress) {
+        const mode: 'practice' | 'memorize' = (state.value.mode as any) === 'memorize' ? 'memorize' : 'practice'
+        localStorage.setItem(getKeyForMode(mode), JSON.stringify(state.value))
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.value))
     }
 }
 
 // 从 localStorage 恢复进度
-const loadProgress = (): QuizState | null => {
-    const saved = localStorage.getItem(STORAGE_KEY)
+const loadProgress = (mode?: 'practice' | 'memorize'): QuizState | null => {
+    const key = mode ? getKeyForMode(mode) : STORAGE_KEY
+    const saved = localStorage.getItem(key)
     if (saved) {
         try {
             return JSON.parse(saved)
@@ -36,8 +42,14 @@ const loadProgress = (): QuizState | null => {
 }
 
 // 清除保存的进度
-const clearProgress = () => {
-    localStorage.removeItem(STORAGE_KEY)
+const clearProgress = (mode?: 'practice' | 'memorize') => {
+    if (mode) {
+        localStorage.removeItem(getKeyForMode(mode))
+    } else {
+        localStorage.removeItem(STORAGE_KEY)
+        localStorage.removeItem(KEY_PRACTICE)
+        localStorage.removeItem(KEY_MEMORIZE)
+    }
 }
 
 // 监听状态变化，自动保存
@@ -98,6 +110,15 @@ export function useQuiz() {
         return false
     }
 
+    const resumeByMode = (mode: 'practice' | 'memorize') => {
+        const saved = loadProgress(mode)
+        if (saved && saved.questions && saved.questions.length > 0 && !saved.endTime) {
+            state.value = saved
+            return true
+        }
+        return false
+    }
+
     // 检查是否有保存的进度
     const hasSavedProgress = () => {
         const saved = loadProgress()
@@ -110,6 +131,11 @@ export function useQuiz() {
             return false
         }
         return true
+    }
+
+    const hasSavedByMode = (mode: 'practice' | 'memorize') => {
+        const saved = loadProgress(mode)
+        return !!(saved && saved.questions && saved.questions.length > 0 && !saved.endTime)
     }
 
     // 提交答案
@@ -174,7 +200,8 @@ export function useQuiz() {
 
     // 结束答题
     const finishQuiz = () => {
-        clearProgress() // 先清除保存的进度
+        const mode: 'practice' | 'memorize' = (state.value.mode as any) === 'memorize' ? 'memorize' : 'practice'
+        clearProgress(mode) // 先清除当前模式的保存的进度
         state.value.endTime = Date.now()
     }
 
@@ -221,7 +248,9 @@ export function useQuiz() {
         loadQuestions,
         startQuiz,
         resumeQuiz,
+        resumeByMode,
         hasSavedProgress,
+        hasSavedByMode,
         resetQuiz,
         submitAnswer,
         nextQuestion,
@@ -229,6 +258,7 @@ export function useQuiz() {
         revealAnswer,
         goToQuestion,
         finishQuiz,
+        clearProgress,
         currentQuestion,
         progress,
         score
