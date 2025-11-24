@@ -36,7 +36,7 @@ export function useWrongQuestions() {
     }
 
     // 添加错题
-    const addWrongQuestion = (question: Question, userAnswer: number | number[]) => {
+    const addWrongQuestion = (question: Question, userAnswer: number | number[] | string | string[]) => {
         const id = generateQuestionId(question)
         const existingIndex = wrongQuestions.value.findIndex(wq => wq.id === id)
 

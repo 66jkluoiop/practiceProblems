@@ -113,12 +113,30 @@ export function useQuiz() {
     }
 
     // 提交答案
-    const submitAnswer = (answer: number | number[]) => {
+    const submitAnswer = (answer: number | number[] | string | string[]) => {
         const current = state.value.questions[state.value.currentIndex]
-        // 判断答案是否正确
-        const isCorrect = Array.isArray(answer)
-            ? JSON.stringify(answer.sort()) === JSON.stringify((current.answer as number[]).sort())
-            : answer === current.answer
+        let isCorrect = false
+        if (current.type === 'single' || current.type === 'multiple') {
+            isCorrect = Array.isArray(answer)
+                ? JSON.stringify((answer as number[]).slice().sort()) === JSON.stringify((current.answer as number[]).slice().sort())
+                : answer === current.answer
+        } else {
+            const norm = (v: unknown) => typeof v === 'string' ? v.trim().toLowerCase() : v
+            if (Array.isArray(current.answer)) {
+                if (Array.isArray(answer)) {
+                    const a = (answer as string[]).map(norm)
+                    const b = (current.answer as string[]).map(norm)
+                    isCorrect = JSON.stringify(a.slice().sort()) === JSON.stringify(b.slice().sort())
+                } else {
+                    const a = norm(answer as string)
+                    const b = (current.answer as string[]).map(norm)
+                    isCorrect = b.includes(a as string)
+                }
+            } else {
+                const a = Array.isArray(answer) ? (answer as string[])[0] : (answer as string)
+                isCorrect = norm(a) === norm(current.answer as string)
+            }
+        }
 
         state.value.userAnswers.push({
             questionIndex: state.value.currentIndex,
@@ -181,6 +199,12 @@ export function useQuiz() {
         }
     })
 
+    const goToQuestion = (index: number) => {
+        if (index >= 0 && index < state.value.questions.length) {
+            state.value.currentIndex = index
+        }
+    }
+
     return {
         state,
         loadQuestions,
@@ -191,6 +215,7 @@ export function useQuiz() {
         submitAnswer,
         nextQuestion,
         prevQuestion,
+        goToQuestion,
         finishQuiz,
         currentQuestion,
         progress,

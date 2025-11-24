@@ -134,11 +134,17 @@ const wrongQuestions = computed(() => {
 })
 
 // 格式化答案显示
-const formatAnswer = (answer: number | number[], options: string[]) => {
+const formatAnswer = (answer: number | number[] | string | string[], options?: string[]) => {
   if (Array.isArray(answer)) {
-    return answer.map(i => `${String.fromCharCode(65 + i)}. ${options[i]}`).join(', ')
+    if (typeof answer[0] === 'number' && options) {
+      return (answer as number[]).map(i => `${String.fromCharCode(65 + i)}. ${options[i]}`).join(', ')
+    }
+    return (answer as (string | number)[]).map(a => String(a)).join(', ')
   }
-  return `${String.fromCharCode(65 + answer)}. ${options[answer]}`
+  if (typeof answer === 'number') {
+    return options ? `${String.fromCharCode(65 + answer)}. ${options[answer]}` : String(answer)
+  }
+  return String(answer)
 }
 
 // 重新开始答题

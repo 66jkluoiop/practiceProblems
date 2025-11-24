@@ -2,10 +2,10 @@
 export interface Question {
     bank?: string
     category: string
-    type: 'single' | 'multiple'
+    type: 'single' | 'multiple' | 'short' | 'fill'
     question: string
-    options: string[]
-    answer: number | number[]
+    options?: string[]
+    answer: number | number[] | string | string[]
     explanation: string
     difficulty: 'easy' | 'medium' | 'hard'
     status: string
@@ -13,7 +13,7 @@ export interface Question {
 
 export interface UserAnswer {
     questionIndex: number
-    answer: number | number[]
+    answer: number | number[] | string | string[]
     isCorrect: boolean
 }
 
@@ -30,7 +30,7 @@ export interface QuizState {
 export interface WrongQuestion {
     id: string // 唯一标识
     question: Question
-    userAnswer: number | number[]
+    userAnswer: number | number[] | string | string[]
     wrongCount: number // 错误次数
     lastWrongTime: number // 最后一次答错时间
     isReviewed: boolean // 是否已复习

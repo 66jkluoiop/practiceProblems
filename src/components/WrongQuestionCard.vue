@@ -5,7 +5,7 @@
                 <span class="tag" :class="`tag-${question.question.difficulty}`">
                     {{ difficultyMap[question.question.difficulty] }}
                 </span>
-                <span class="tag">{{ question.question.type === 'single' ? '单选' : '多选' }}</span>
+                <span class="tag">{{ questionTypeLabel }}</span>
                 <span class="tag">错误 {{ question.wrongCount }} 次</span>
             </div>
             <button class="delete-btn" @click="$emit('delete', question.id)">删除</button>
@@ -14,13 +14,23 @@
         <div class="question-content">
             <h3>{{ question.question.question }}</h3>
 
-            <div class="options">
+            <div v-if="question.question.type === 'single' || question.question.type === 'multiple'" class="options">
                 <div v-for="(option, index) in question.question.options" :key="index" class="option" :class="{
                     wrong: isWrongAnswer(index),
                     correct: isCorrectAnswer(index)
                 }">
                     <span class="option-label">{{ String.fromCharCode(65 + index) }}</span>
                     <span class="option-text">{{ option }}</span>
+                </div>
+            </div>
+            <div v-else class="options">
+                <div class="option">
+                    <span class="option-label">答</span>
+                    <span class="option-text">{{ formatTextAnswer(question.userAnswer) }}</span>
+                </div>
+                <div class="option correct">
+                    <span class="option-label">正</span>
+                    <span class="option-text">{{ formatTextAnswer(question.question.answer) }}</span>
                 </div>
             </div>
 
@@ -41,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, computed } from 'vue'
 import type { WrongQuestion } from '@/types'
 
 const props = defineProps<{
@@ -60,20 +70,40 @@ const difficultyMap = {
     hard: '困难'
 }
 
+const questionTypeLabel = computed(() => {
+    return props.question.question.type === 'single'
+        ? '单选'
+        : props.question.question.type === 'multiple'
+            ? '多选'
+            : props.question.question.type === 'short'
+                ? '简答'
+                : '填空'
+})
+
 // 判断是否为错误答案
 const isWrongAnswer = (index: number): boolean => {
+    if (props.question.question.type !== 'single' && props.question.question.type !== 'multiple') return false
     if (Array.isArray(props.question.userAnswer)) {
-        return props.question.userAnswer.includes(index) && !isCorrectAnswer(index)
+        return (props.question.userAnswer as number[]).includes(index) && !isCorrectAnswer(index)
     }
     return props.question.userAnswer === index && !isCorrectAnswer(index)
 }
 
 // 判断是否为正确答案
 const isCorrectAnswer = (index: number): boolean => {
-    if (Array.isArray(props.question.question.answer)) {
-        return props.question.question.answer.includes(index)
+    if (props.question.question.type !== 'single' && props.question.question.type !== 'multiple') return false
+    const ans = props.question.question.answer
+    if (Array.isArray(ans)) {
+        return (ans as number[]).includes(index)
     }
-    return props.question.question.answer === index
+    return ans === index
+}
+
+const formatTextAnswer = (ans: string | string[] | number | number[]): string => {
+    if (Array.isArray(ans)) {
+        return ans.map(a => String(a)).join(', ')
+    }
+    return String(ans)
 }
 
 // 格式化时间
