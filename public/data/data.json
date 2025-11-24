@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
     "bank": "测试题",
     "questions": [
@@ -172,181 +171,950 @@
             "difficulty": "easy",
             "status": "active"
         }
-    ]
-=======
-{
+    ],
     "bank": "测试题",
     "questions": [
-        {
-            "category": "html",
-            "type": "single",
-            "question": "以下哪个HTML标签用于定义文档的头部信息？",
-            "options": [
-                "<header>",
-                "<head>",
-                "<title>",
-                "<meta>"
-            ],
-            "answer": 1,
-            "explanation": "<head>标签用于包含文档的元数据和引用的外部资源",
-            "difficulty": "easy",
-            "status": "active"
-        },
-        {
-            "category": "css",
-            "type": "single",
-            "question": "CSS中哪个属性用于设置元素的外边距？",
-            "options": [
-                "padding",
-                "margin",
-                "border",
-                "spacing"
-            ],
-            "answer": 1,
-            "explanation": "margin属性用于设置元素的外边距，padding用于内边距",
-            "difficulty": "easy",
-            "status": "active"
-        },
-        {
-            "category": "javascript",
-            "type": "multiple",
-            "question": "以下哪些方法可以用于数组遍历？",
-            "options": [
-                "forEach",
-                "map",
-                "filter",
-                "reduce"
-            ],
-            "answer": [
-                0,
-                1,
-                2,
-                3
-            ],
-            "explanation": "forEach、map、filter、reduce都是数组的遍历方法",
-            "difficulty": "medium",
-            "status": "active"
-        },
-        {
-            "category": "javascript",
-            "type": "single",
-            "question": "以下哪个关键字用于声明常量？",
-            "options": [
-                "var",
-                "let",
-                "const",
-                "static"
-            ],
-            "answer": 2,
-            "explanation": "const用于声明常量，其值不能被重新赋值",
-            "difficulty": "easy",
-            "status": "active"
-        },
-        {
-            "category": "vue",
-            "type": "multiple",
-            "question": "以下哪些是Vue.js的核心特性？",
-            "options": [
-                "数据绑定",
-                "组件化",
-                "指令",
-                "虚拟DOM"
-            ],
-            "answer": [
-                0,
-                1,
-                2,
-                3
-            ],
-            "explanation": "Vue.js具有响应式数据绑定、组件系统、指令系统和虚拟DOM等核心特性",
-            "difficulty": "medium",
-            "status": "active"
-        },
-        {
-            "category": "react",
-            "type": "single",
-            "question": "React中用于条件渲染的JavaScript语法是？",
-            "options": [
-                "if语句",
-                "switch语句",
-                "三元运算符",
-                "for循环"
-            ],
-            "answer": 2,
-            "explanation": "在JSX中通常使用三元运算符进行条件渲染",
-            "difficulty": "easy",
-            "status": "active"
-        },
-        {
-            "category": "browser",
-            "type": "multiple",
-            "question": "以下哪些是浏览器本地存储的方式？",
-            "options": [
-                "Cookie",
-                "LocalStorage",
-                "SessionStorage",
-                "IndexedDB"
-            ],
-            "answer": [
-                0,
-                1,
-                2,
-                3
-            ],
-            "explanation": "这四种都是浏览器提供的本地存储方案",
-            "difficulty": "medium",
-            "status": "active"
-        },
-        {
-            "category": "http",
-            "type": "single",
-            "question": "HTTP状态码200表示什么？",
-            "options": [
-                "重定向",
-                "客户端错误",
-                "服务器错误",
-                "请求成功"
-            ],
-            "answer": 3,
-            "explanation": "200状态码表示请求已成功，请求所希望的响应头或数据体将随此响应返回",
-            "difficulty": "easy",
-            "status": "active"
-        },
-        {
-            "category": "javascript",
-            "type": "multiple",
-            "question": "以下哪些是ES6的新特性？",
-            "options": [
-                "箭头函数",
-                "模板字符串",
-                "解构赋值",
-                "Promise"
-            ],
-            "answer": [
-                0,
-                1,
-                2,
-                3
-            ],
-            "explanation": "这些都是ES6引入的重要新特性",
-            "difficulty": "medium",
-            "status": "active"
-        },
-        {
-            "category": "css",
-            "type": "single",
-            "question": "CSS中哪个选择器用于选中类名为'container'的元素？",
-            "options": [
-                "#container",
-                ".container",
-                "container",
-                "*container"
-            ],
-            "answer": 1,
-            "explanation": ".container是类选择器，用于选中class='container'的元素",
-            "difficulty": "easy",
-            "status": "active"
-        }
+        [
+            {
+                "category": "chapter1_intro",
+                "type": "single",
+                "question": "数据库系统与文件系统的主要区别是？",
+                "options": [
+                    "数据可长期保存",
+                    "由专门软件管理数据",
+                    "数据的结构化",
+                    "数据可共享"
+                ],
+                "answer": 2,
+                "explanation": "数据库系统与文件系统的根本区别在于数据的结构化。文件系统中的数据虽有结构，但整体无结构；而数据库系统中的数据是高度结构化的。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter1_intro",
+                "type": "single",
+                "question": "数据库系统的核心是？",
+                "options": [
+                    "数据库",
+                    "数据库管理系统",
+                    "操作系统",
+                    "应用系统"
+                ],
+                "answer": 1,
+                "explanation": "数据库管理系统（DBMS）是数据库系统的核心，负责数据的组织、存储、管理和维护。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter1_intro",
+                "type": "multiple",
+                "question": "数据库系统的特点包括？",
+                "options": [
+                    "数据结构化",
+                    "数据共享性高、冗余度低",
+                    "数据独立性高",
+                    "数据由DBMS统一管理和控制"
+                ],
+                "answer": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "explanation": "数据库系统的四个主要特点：数据结构化（根本区别）、数据共享性高冗余度低、数据独立性高、由DBMS统一管理控制。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter1_intro",
+                "type": "single",
+                "question": "保证数据物理独立性的映像机制是？",
+                "options": [
+                    "外模式/模式映像",
+                    "模式/内模式映像",
+                    "用户模式/存储模式映像",
+                    "逻辑模式/物理模式映像"
+                ],
+                "answer": 1,
+                "explanation": "模式/内模式映像保证了数据的物理独立性。当数据库的存储结构改变时，通过修改此映像使模式保持不变。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter1_intro",
+                "type": "single",
+                "question": "数据模型的三个组成部分是？",
+                "options": [
+                    "数据、数据结构、数据操作",
+                    "数据结构、数据操作、完整性约束",
+                    "实体、属性、联系",
+                    "模式、外模式、内模式"
+                ],
+                "answer": 1,
+                "explanation": "数据模型通常由数据结构、数据操作和完整性约束三部分组成。数据结构描述系统的静态特性，数据操作描述动态特性，完整性约束是一组完整性规则。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter1_intro",
+                "type": "single",
+                "question": "概念模型主要用于什么阶段？",
+                "options": [
+                    "需求分析阶段",
+                    "概念结构设计阶段",
+                    "逻辑结构设计阶段",
+                    "物理结构设计阶段"
+                ],
+                "answer": 1,
+                "explanation": "概念模型用于数据库设计的概念结构设计阶段，它独立于具体的DBMS，是对现实世界的抽象。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter2_relation",
+                "type": "single",
+                "question": "关系模型中，实体完整性规则要求？",
+                "options": [
+                    "外码不能取空值",
+                    "主属性不能取空值",
+                    "所有属性都不能取空值",
+                    "非主属性不能取空值"
+                ],
+                "answer": 1,
+                "explanation": "实体完整性规则：若属性A是基本关系R的主属性，则A不能取空值。这是为了保证关系中每个元组都是可标识的。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter2_relation",
+                "type": "single",
+                "question": "关系代数中，从两个关系的笛卡尔积中选取属性间满足条件的元组的运算称为？",
+                "options": [
+                    "选择",
+                    "投影",
+                    "连接",
+                    "除"
+                ],
+                "answer": 2,
+                "explanation": "连接运算（⋈）是从两个关系的笛卡尔积中选取属性间满足一定条件的元组。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter2_relation",
+                "type": "single",
+                "question": "自然连接与等值连接的主要区别是？",
+                "options": [
+                    "连接条件不同",
+                    "结果集中重复列的处理不同",
+                    "运算对象不同",
+                    "运算优先级不同"
+                ],
+                "answer": 1,
+                "explanation": "自然连接是一种特殊的等值连接，它要求两个关系中进行比较的分量必须是同名的属性组，并且在结果中把重复的属性列去掉。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter2_relation",
+                "type": "single",
+                "question": "关系代数的五种基本运算包括？",
+                "options": [
+                    "选择、投影、并、差、笛卡尔积",
+                    "选择、投影、连接、除、交",
+                    "并、差、交、选择、连接",
+                    "投影、选择、自然连接、等值连接、除"
+                ],
+                "answer": 0,
+                "explanation": "关系代数的五种基本运算是：选择、投影、并、差、笛卡尔积，其他运算都可以用这五种基本运算来表达。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter2_relation",
+                "type": "single",
+                "question": "参照完整性规则要求？",
+                "options": [
+                    "主码不能取空值",
+                    "外码要么取空值，要么等于被参照关系的主码值",
+                    "所有属性都不能取空值",
+                    "候选码必须唯一"
+                ],
+                "answer": 1,
+                "explanation": "参照完整性规则：若属性F是关系R的外码，它与关系S的主码相对应，则R中每个元组在F上的值必须为：或者取空值，或者等于S中某个元组的主码值。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter3_sql",
+                "type": "single",
+                "question": "SQL语言中，用于定义模式的语句是？",
+                "options": [
+                    "CREATE TABLE",
+                    "CREATE SCHEMA",
+                    "CREATE DATABASE",
+                    "CREATE VIEW"
+                ],
+                "answer": 1,
+                "explanation": "CREATE SCHEMA语句用于定义模式，CREATE TABLE用于定义基本表，CREATE VIEW用于定义视图。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter3_sql",
+                "type": "single",
+                "question": "在SQL查询中，WHERE子句与HAVING子句的根本区别是？",
+                "options": [
+                    "WHERE用于单表查询，HAVING用于多表查询",
+                    "WHERE在分组前过滤，HAVING在分组后过滤",
+                    "WHERE可以使用聚集函数，HAVING不能使用",
+                    "WHERE用于条件判断，HAVING用于结果排序"
+                ],
+                "answer": 1,
+                "explanation": "WHERE子句在分组前对行进行过滤，不能使用聚集函数；HAVING子句在分组后对组进行过滤，可以使用聚集函数。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter3_sql",
+                "type": "single",
+                "question": "SQL语言中，用于授予权限的语句是？",
+                "options": [
+                    "CREATE",
+                    "GRANT",
+                    "COMMIT",
+                    "INSERT"
+                ],
+                "answer": 1,
+                "explanation": "GRANT语句用于授予用户对数据库对象的操作权限，属于数据控制语言（DCL）。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter3_sql",
+                "type": "multiple",
+                "question": "SQL语言的特点包括？",
+                "options": [
+                    "综合统一",
+                    "高度非过程化",
+                    "面向集合的操作方式",
+                    "以同一种语法结构提供多种使用方式"
+                ],
+                "answer": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "explanation": "SQL语言具有综合统一、高度非过程化、面向集合的操作方式、以同一种语法结构提供多种使用方式等特点。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter3_sql",
+                "type": "single",
+                "question": "下列哪个SQL语句属于数据操纵语言？",
+                "options": [
+                    "CREATE TABLE",
+                    "GRANT SELECT",
+                    "INSERT INTO",
+                    "ALTER TABLE"
+                ],
+                "answer": 2,
+                "explanation": "INSERT INTO属于数据操纵语言（DML），用于插入数据。CREATE TABLE和ALTER TABLE属于数据定义语言（DDL），GRANT属于数据控制语言（DCL）。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter4_security",
+                "type": "single",
+                "question": "数据库安全性的主要技术不包括？",
+                "options": [
+                    "用户身份鉴别",
+                    "存取控制",
+                    "视图机制",
+                    "数据压缩"
+                ],
+                "answer": 3,
+                "explanation": "数据压缩是为了节省存储空间，不属于数据库安全性的技术。安全性技术包括用户身份鉴别、存取控制、视图、审计、数据加密等。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter4_security",
+                "type": "single",
+                "question": "强制存取控制的主要特征是？",
+                "options": [
+                    "用户自主决定权限",
+                    "基于用户角色授权",
+                    "对数据和用户标定密级",
+                    "通过视图限制访问"
+                ],
+                "answer": 2,
+                "explanation": "强制存取控制通过对数据对象和用户主体标定密级，根据密级规则决定用户能否存取数据对象。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter4_security",
+                "type": "single",
+                "question": "自主存取控制中，WITH GRANT OPTION的作用是？",
+                "options": [
+                    "允许用户创建表",
+                    "允许用户将权限授予其他用户",
+                    "允许用户删除数据",
+                    "允许用户修改表结构"
+                ],
+                "answer": 1,
+                "explanation": "WITH GRANT OPTION子句允许获得权限的用户把该权限再授予其他用户。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter5_integrity",
+                "type": "single",
+                "question": "数据库完整性约束条件的分类不包括？",
+                "options": [
+                    "实体完整性",
+                    "参照完整性",
+                    "用户定义的完整性",
+                    "系统定义的完整性"
+                ],
+                "answer": 3,
+                "explanation": "数据库完整性约束条件包括实体完整性、参照完整性和用户定义的完整性三类。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter5_integrity",
+                "type": "single",
+                "question": "触发器的激活时机不包括？",
+                "options": [
+                    "BEFORE INSERT",
+                    "AFTER UPDATE",
+                    "INSTEAD OF DELETE",
+                    "DURING SELECT"
+                ],
+                "answer": 3,
+                "explanation": "触发器的激活时机包括BEFORE、AFTER和INSTEAD OF，但不包括DURING。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter5_integrity",
+                "type": "single",
+                "question": "下列哪个用于定义更一般的完整性约束？",
+                "options": [
+                    "CHECK约束",
+                    "断言",
+                    "触发器",
+                    "规则"
+                ],
+                "answer": 1,
+                "explanation": "断言（Assertion）用于定义涉及多个表或聚集操作的更一般性的完整性约束。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter7_design",
+                "type": "single",
+                "question": "数据库设计过程中，形成E-R图的阶段是？",
+                "options": [
+                    "需求分析",
+                    "概念结构设计",
+                    "逻辑结构设计",
+                    "物理结构设计"
+                ],
+                "answer": 1,
+                "explanation": "概念结构设计阶段通过对需求进行综合、归纳与抽象，形成独立于DBMS的概念模型，通常用E-R图表示。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter7_design",
+                "type": "single",
+                "question": "E-R图向关系模型转换时，m:n联系的转换规则是？",
+                "options": [
+                    "转换为一个独立的关系模式",
+                    "与任意一端实体合并",
+                    "与n端实体合并",
+                    "不需要转换"
+                ],
+                "answer": 0,
+                "explanation": "m:n联系必须转换为一个独立的关系模式，该模式的属性包括与该联系相连的各实体的码以及联系本身的属性。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter7_design",
+                "type": "single",
+                "question": "数据库设计过程中，需求分析阶段的主要成果是？",
+                "options": [
+                    "E-R图",
+                    "数据字典和数据流图",
+                    "关系模式",
+                    "存储结构设计"
+                ],
+                "answer": 1,
+                "explanation": "需求分析阶段的主要成果是数据字典和数据流图，它们准确描述了系统的需求。",
+                "difficulty": "medium",
+                "status": "active"
+            }
+        ],
+        [
+            {
+                "category": "chapter8_normalization",
+                "type": "single",
+                "question": "关系模式R∈2NF，则它必须满足？",
+                "options": [
+                    "R∈1NF且无非主属性对码的部分函数依赖",
+                    "R∈1NF且无非主属性对码的传递函数依赖",
+                    "R∈1NF且无主属性对码的部分函数依赖",
+                    "R∈1NF且无主属性对码的传递函数依赖"
+                ],
+                "answer": 0,
+                "explanation": "2NF要求关系模式R∈1NF，并且每个非主属性都完全函数依赖于R的码，即消除非主属性对码的部分函数依赖。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter8_normalization",
+                "type": "single",
+                "question": "关系模式分解的两个重要特性是？",
+                "options": [
+                    "无损连接性和保持函数依赖",
+                    "数据一致性和完整性",
+                    "查询高效性和存储节省性",
+                    "安全性和可靠性"
+                ],
+                "answer": 0,
+                "explanation": "关系模式分解应该既具有无损连接性，又保持函数依赖性，这是模式分解的重要准则。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter8_normalization",
+                "type": "single",
+                "question": "如果一个关系模式R∈3NF，则它必然满足？",
+                "options": [
+                    "R∈1NF",
+                    "R∈2NF",
+                    "R∈BCNF",
+                    "A和B都正确"
+                ],
+                "answer": 3,
+                "explanation": "范式之间存在包含关系：BCNF⊂3NF⊂2NF⊂1NF。如果R∈3NF，则必然满足R∈2NF和R∈1NF，但不一定满足R∈BCNF。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter8_normalization",
+                "type": "single",
+                "question": "函数依赖X→Y表示？",
+                "options": [
+                    "X决定Y，Y也决定X",
+                    "X的每个值对应Y的多个值",
+                    "Y函数依赖于X",
+                    "X和Y相互独立"
+                ],
+                "answer": 2,
+                "explanation": "函数依赖X→Y表示Y函数依赖于X，即X决定Y，对于X的每一个值，Y有唯一确定的值与之对应。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter8_normalization",
+                "type": "multiple",
+                "question": "关系规范化理论要解决的问题包括？",
+                "options": [
+                    "数据冗余",
+                    "插入异常",
+                    "删除异常",
+                    "更新异常"
+                ],
+                "answer": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "explanation": "关系规范化理论主要解决数据冗余、插入异常、删除异常和更新异常等问题。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter9_query",
+                "type": "single",
+                "question": "查询处理过程中，代数优化的主要策略是？",
+                "options": [
+                    "选择运算尽可能先做",
+                    "使用索引加速查询",
+                    "优化存储结构",
+                    "并行处理查询"
+                ],
+                "answer": 0,
+                "explanation": "代数优化主要是通过对关系代数表达式进行等价变换来提高效率，如选择运算尽可能先做、投影运算尽早执行等。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter9_query",
+                "type": "single",
+                "question": "物理优化不包括以下哪种方法？",
+                "options": [
+                    "基于规则的优化",
+                    "基于代价的优化",
+                    "使用索引优化",
+                    "代数表达式等价变换"
+                ],
+                "answer": 3,
+                "explanation": "代数表达式等价变换属于代数优化的范畴，不属于物理优化。物理优化包括基于规则的优化、基于代价的优化和使用索引等方法。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter9_query",
+                "type": "single",
+                "question": "连接操作的实现方法不包括？",
+                "options": [
+                    "嵌套循环连接",
+                    "排序-合并连接",
+                    "索引连接",
+                    "选择连接"
+                ],
+                "answer": 3,
+                "explanation": "连接操作的实现方法包括嵌套循环连接、排序-合并连接、索引连接和Hash连接等，选择连接不是标准的连接实现方法。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter10_recovery",
+                "type": "single",
+                "question": "事务的ACID特性中，保证事务执行结果正确性的特性是？",
+                "options": [
+                    "原子性",
+                    "一致性",
+                    "隔离性",
+                    "持久性"
+                ],
+                "answer": 1,
+                "explanation": "一致性（Consistency）保证事务的执行必须使数据库从一个一致性状态转变到另一个一致性状态。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter10_recovery",
+                "type": "single",
+                "question": "日志文件必须遵循的登记原则是？",
+                "options": [
+                    "先写数据库，后写日志文件",
+                    "先写日志文件，后写数据库",
+                    "日志文件和数据库同时写",
+                    "没有特定顺序要求"
+                ],
+                "answer": 1,
+                "explanation": "为保证数据库的可恢复性，登记日志文件时必须严格遵循\"先写日志文件\"的原则。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter10_recovery",
+                "type": "single",
+                "question": "系统故障恢复时，需要进行的操作是？",
+                "options": [
+                    "重做所有未完成的事务",
+                    "撤销所有已提交的事务",
+                    "撤销所有未完成的事务，重做所有已提交的事务",
+                    "重装数据库副本"
+                ],
+                "answer": 2,
+                "explanation": "系统故障恢复时，需要撤销（UNDO）所有未完成的事务，重做（REDO）所有已提交的事务，以将数据库恢复到一致状态。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter10_recovery",
+                "type": "multiple",
+                "question": "数据库系统中可能发生的故障类型包括？",
+                "options": [
+                    "事务内部故障",
+                    "系统故障",
+                    "介质故障",
+                    "计算机病毒"
+                ],
+                "answer": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "explanation": "数据库系统中可能发生的故障包括事务内部故障、系统故障、介质故障和计算机病毒等。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "chapter11_concurrency",
+                "type": "single",
+                "question": "并发操作可能带来的数据不一致性不包括？",
+                "options": [
+                    "丢失修改",
+                    "不可重复读",
+                    "读脏数据",
+                    "事务故障"
+                ],
+                "answer": 3,
+                "explanation": "事务故障属于系统故障范畴，不是并发操作直接导致的问题。并发操作主要带来丢失修改、不可重复读和读脏数据。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter11_concurrency",
+                "type": "single",
+                "question": "两段锁协议的主要作用是？",
+                "options": [
+                    "避免死锁",
+                    "避免活锁",
+                    "保证可串行化调度",
+                    "提高并发度"
+                ],
+                "answer": 2,
+                "explanation": "两段锁协议是保证并发调度可串行化的充分条件。若所有事务均遵守两段锁协议，则这些事务的任何并发调度都是可串行化的。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "chapter11_concurrency",
+                "type": "single",
+                "question": "下列关于封锁的叙述中，正确的是？",
+                "options": [
+                    "共享锁和排他锁可以同时加在同一数据项上",
+                    "排他锁只允许一个事务读取数据",
+                    "共享锁允许多个事务同时读取数据",
+                    "封锁协议可以完全避免死锁"
+                ],
+                "answer": 2,
+                "explanation": "共享锁（S锁）允许多个事务同时读取同一数据项，但排他锁（X锁）只允许一个事务独占数据项。两段锁协议不能完全避免死锁。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "chapter11_concurrency",
+                "type": "multiple",
+                "question": "死锁的预防方法包括？",
+                "options": [
+                    "一次封锁法",
+                    "顺序封锁法",
+                    "超时法",
+                    "等待图法"
+                ],
+                "answer": [
+                    0,
+                    1
+                ],
+                "explanation": "死锁的预防方法包括一次封锁法和顺序封锁法。超时法和等待图法是死锁的诊断方法。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "在SELECT语句中，用于对结果排序的子句是？",
+                "options": [
+                    "WHERE",
+                    "GROUP BY",
+                    "ORDER BY",
+                    "HAVING"
+                ],
+                "answer": 2,
+                "explanation": "ORDER BY子句用于对查询结果进行排序，可以指定升序（ASC）或降序（DESC）。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "下列哪个不是SQL中的聚集函数？",
+                "options": [
+                    "COUNT",
+                    "SUM",
+                    "AVG",
+                    "MAXIMUM"
+                ],
+                "answer": 3,
+                "explanation": "SQL中的聚集函数包括COUNT、SUM、AVG、MAX、MIN等，MAXIMUM不是标准的聚集函数，正确的应该是MAX。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "视图的主要作用不包括？",
+                "options": [
+                    "简化用户操作",
+                    "提高查询速度",
+                    "提供逻辑数据独立性",
+                    "对机密数据提供安全保护"
+                ],
+                "answer": 1,
+                "explanation": "视图不会提高查询速度，因为对视图的查询最终要转换为对基本表的查询。视图的主要作用是简化操作、提供逻辑独立性和数据安全保护。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "数据库的完整性是指数据的？",
+                "options": [
+                    "正确性和相容性",
+                    "安全性和保密性",
+                    "共享性和独立性",
+                    "冗余度和一致性"
+                ],
+                "answer": 0,
+                "explanation": "数据库的完整性是指数据的正确性和相容性，防止数据库中存在不符合语义的数据。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "在关系数据库中，实现表与表之间的联系是通过？",
+                "options": [
+                    "实体完整性规则",
+                    "参照完整性规则",
+                    "用户定义的完整性规则",
+                    "值域"
+                ],
+                "answer": 1,
+                "explanation": "参照完整性规则通过外码实现表与表之间的联系，保证数据的一致性。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "SQL语言中，删除一个表的命令是？",
+                "options": [
+                    "DELETE",
+                    "DROP",
+                    "CLEAR",
+                    "REMOVE"
+                ],
+                "answer": 1,
+                "explanation": "DROP TABLE命令用于删除表，包括表的结构和其中的数据。DELETE命令只删除表中的数据，不删除表结构。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "事务的持久性是指？",
+                "options": [
+                    "事务中包括的所有操作要么都做，要么都不做",
+                    "事务一旦提交，对数据库的改变是永久的",
+                    "一个事务内部的操作及使用的数据对并发的其他事务是隔离的",
+                    "事务必须是使数据库从一个一致性状态变到另一个一致性状态"
+                ],
+                "answer": 1,
+                "explanation": "持久性（Durability）指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的，接下来的其他操作或故障不应该对其有任何影响。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "数据库的并发操作可能带来的问题包括丢失修改、不可重复读和？",
+                "options": [
+                    "数据冗余",
+                    "读脏数据",
+                    "数据不一致",
+                    "数据丢失"
+                ],
+                "answer": 1,
+                "explanation": "并发操作可能带来的数据不一致性包括丢失修改、不可重复读和读脏数据。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "在数据库设计中，将E-R图转换成关系数据模型的过程属于？",
+                "options": [
+                    "需求分析阶段",
+                    "概念设计阶段",
+                    "逻辑设计阶段",
+                    "物理设计阶段"
+                ],
+                "answer": 2,
+                "explanation": "将E-R图转换成关系数据模型的过程属于逻辑设计阶段，这个阶段将概念模型转换为具体的DBMS支持的数据模型。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "SQL语言中，条件\"年龄 BETWEEN 20 AND 30\"表示年龄在20到30之间，且？",
+                "options": [
+                    "包括20岁和30岁",
+                    "不包括20岁和30岁",
+                    "包括20岁但不包括30岁",
+                    "不包括20岁但包括30岁"
+                ],
+                "answer": 0,
+                "explanation": "BETWEEN...AND...操作符是包含边界值的，即包括20岁和30岁。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "数据库系统的数据独立性是指？",
+                "options": [
+                    "不会因为数据的变化而影响应用程序",
+                    "不会因为系统数据存储结构与数据逻辑结构的变化而影响应用程序",
+                    "不会因为存储策略的变化而影响存储结构",
+                    "不会因为某些存储结构的变化而影响其他的存储结构"
+                ],
+                "answer": 1,
+                "explanation": "数据独立性包括物理独立性和逻辑独立性，指应用程序不会因为系统数据存储结构与数据逻辑结构的变化而受到影响。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "在数据库三级模式间引入二级映象的主要作用是？",
+                "options": [
+                    "提高数据与程序的独立性",
+                    "提高数据与程序的安全性",
+                    "保持数据与程序的一致性",
+                    "提高数据与程序的可移植性"
+                ],
+                "answer": 0,
+                "explanation": "二级映象（外模式/模式映象和模式/内模式映象）保证了数据与程序的逻辑独立性和物理独立性。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "关系数据库规范化是为解决关系数据库中的什么问题而引入的？",
+                "options": [
+                    "插入异常、删除异常和数据冗余",
+                    "提高查询速度",
+                    "减少数据操作的复杂性",
+                    "保证数据的安全性和完整性"
+                ],
+                "answer": 0,
+                "explanation": "关系数据库规范化主要解决插入异常、删除异常、更新异常和数据冗余等问题。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "SQL语言中，删除记录的命令是？",
+                "options": [
+                    "DELETE",
+                    "DROP",
+                    "CLEAR",
+                    "REMOVE"
+                ],
+                "answer": 0,
+                "explanation": "DELETE命令用于删除表中的记录，DROP命令用于删除数据库对象（如表、索引等）。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "在关系数据库中，模式对应的是？",
+                "options": [
+                    "视图和部分基本表",
+                    "基本表",
+                    "存储文件",
+                    "物理磁盘"
+                ],
+                "answer": 1,
+                "explanation": "在数据库三级模式结构中，模式对应的是基本表，外模式对应的是视图和部分基本表，内模式对应的是存储文件。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "数据库管理系统通常提供授权功能来控制不同用户访问数据的权限，这主要是为了实现数据库的？",
+                "options": [
+                    "可靠性",
+                    "一致性",
+                    "完整性",
+                    "安全性"
+                ],
+                "answer": 3,
+                "explanation": "授权功能是数据库安全性的重要措施，用于控制不同用户对数据的访问权限。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "在SQL的查询语句中，对应关系代数中\"投影\"运算的语句是？",
+                "options": [
+                    "WHERE",
+                    "SELECT",
+                    "FROM",
+                    "SET"
+                ],
+                "answer": 1,
+                "explanation": "SELECT子句对应关系代数中的投影运算，用于选择需要的列。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "数据库系统的并发控制主要方法是采用什么机制？",
+                "options": [
+                    "授权",
+                    "日志",
+                    "封锁",
+                    "索引"
+                ],
+                "answer": 2,
+                "explanation": "数据库系统的并发控制主要采用封锁机制，通过给数据对象加锁来控制并发操作。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "SQL语言中，实现数据检索的语句是？",
+                "options": [
+                    "SELECT",
+                    "INSERT",
+                    "UPDATE",
+                    "DELETE"
+                ],
+                "answer": 0,
+                "explanation": "SELECT语句用于数据检索，INSERT用于插入数据，UPDATE用于更新数据，DELETE用于删除数据。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "comprehensive",
+                "type": "single",
+                "question": "在数据库技术中，独立于计算机系统的模型是？",
+                "options": [
+                    "概念模型",
+                    "逻辑模型",
+                    "物理模型",
+                    "关系模型"
+                ],
+                "answer": 0,
+                "explanation": "概念模型独立于具体的计算机系统和DBMS，是对现实世界的抽象。",
+                "difficulty": "medium",
+                "status": "active"
+            }
+        ]
     ]
->>>>>>> f465a0dd86651586e2c3629377edbabf79b9810b
 }
