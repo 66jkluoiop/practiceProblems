@@ -1,0 +1,8 @@
+{
+  "banks": [
+    {
+      "name": "数据库",
+      "file": "/data/data.json"
+    }
+  ]
+}

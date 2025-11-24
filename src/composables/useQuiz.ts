@@ -88,6 +88,22 @@ export function useQuiz() {
         }
     }
 
+    const loadBankQuestions = async (file: string): Promise<Question[]> => {
+        const response = await fetch(file + (file.includes('?') ? '&' : '?') + 't=' + Date.now())
+        const data = await response.json()
+        if (data && Array.isArray((data as any).questions)) {
+            const flattened = ((data as any).questions as unknown[]).flat(Infinity)
+                .filter((q) => q && typeof q === 'object') as Question[]
+            return flattened.map((q) => ({
+                ...q,
+                bank: (q as any).bank ?? (data as any).bank
+            }))
+        } else if (Array.isArray(data)) {
+            return (data as Question[])
+        } else {
+            return []
+        }
+    }
     // 开始答题
     const startQuiz = (questions: Question[], mode: 'practice' | 'memorize' = 'practice') => {
         state.value = {
@@ -256,6 +272,7 @@ export function useQuiz() {
         nextQuestion,
         prevQuestion,
         revealAnswer,
+        loadBankQuestions,
         goToQuestion,
         finishQuiz,
         clearProgress,

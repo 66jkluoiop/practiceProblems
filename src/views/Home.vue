@@ -21,45 +21,45 @@
         </div>
       </div>
       <div class="resume-grid" :class="{ two: practiceSaved && memorizeSaved }">
-      <!-- 继续练习 -->
-      <div v-if="practiceSaved" class="resume-card">
-        <div class="resume-left">
-          <div>
-            <h3>继续练习</h3>
-            <p>练习模式进度已保存</p>
-            <div class="resume-progress">
-              <div class="resume-progress-bar">
-                <div class="resume-progress-fill" :style="{ width: practicePercent + '%' }"></div>
+        <!-- 继续练习 -->
+        <div v-if="practiceSaved" class="resume-card">
+          <div class="resume-left">
+            <div>
+              <h3>继续练习</h3>
+              <p>练习模式进度已保存</p>
+              <div class="resume-progress">
+                <div class="resume-progress-bar">
+                  <div class="resume-progress-fill" :style="{ width: practicePercent + '%' }"></div>
+                </div>
+                <div class="resume-progress-text">已完成 {{ practiceCompleted }} / {{ practiceTotal }}</div>
               </div>
-              <div class="resume-progress-text">已完成 {{ practiceCompleted }} / {{ practiceTotal }}</div>
             </div>
           </div>
+          <div class="resume-right">
+            <button class="text-btn" @click="handleDeleteProgress('practice')">删除</button>
+            <button class="solid-btn" @click="handleResume('practice')">继续</button>
+          </div>
         </div>
-        <div class="resume-right">
-          <button class="text-btn" @click="handleDeleteProgress('practice')">删除</button>
-          <button class="solid-btn" @click="handleResume('practice')">继续</button>
-        </div>
-      </div>
 
-      <!-- 继续背题 -->
-      <div v-if="memorizeSaved" class="resume-card">
-        <div class="resume-left">
-          <div>
-            <h3>继续背题</h3>
-            <p>背题模式进度已保存</p>
-            <div class="resume-progress">
-              <div class="resume-progress-bar">
-                <div class="resume-progress-fill" :style="{ width: memorizePercent + '%' }"></div>
+        <!-- 继续背题 -->
+        <div v-if="memorizeSaved" class="resume-card">
+          <div class="resume-left">
+            <div>
+              <h3>继续背题</h3>
+              <p>背题模式进度已保存</p>
+              <div class="resume-progress">
+                <div class="resume-progress-bar">
+                  <div class="resume-progress-fill" :style="{ width: memorizePercent + '%' }"></div>
+                </div>
+                <div class="resume-progress-text">已背 {{ memorizeIndex }} / {{ memorizeTotal }}</div>
               </div>
-              <div class="resume-progress-text">已背 {{ memorizeIndex }} / {{ memorizeTotal }}</div>
             </div>
           </div>
+          <div class="resume-right">
+            <button class="text-btn" @click="handleDeleteProgress('memorize')">删除</button>
+            <button class="solid-btn" @click="handleResume('memorize')">继续</button>
+          </div>
         </div>
-        <div class="resume-right">
-          <button class="text-btn" @click="handleDeleteProgress('memorize')">删除</button>
-          <button class="solid-btn" @click="handleResume('memorize')">继续</button>
-        </div>
-      </div>
       </div>
 
       <!-- 网格布局 -->
@@ -111,7 +111,7 @@
       </div>
 
       <!-- 开始按钮 -->
-      <button class="start-btn" @click="handleStart" :disabled="filteredQuestions.length === 0">
+      <button class="start-btn" @click="handleStart" :disabled="!canStart">
         开始答题 →
       </button>
     </div>
@@ -132,7 +132,7 @@ import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const router = useRouter()
-const { state, loadQuestions, startQuiz, resumeByMode, clearProgress } = useQuiz()
+const { state, loadQuestions, startQuiz, resumeByMode, clearProgress, loadBankQuestions } = useQuiz()
 const { wrongQuestions } = useWrongQuestions()
 const { isDark, toggleDarkMode } = useDarkMode()
 
@@ -174,15 +174,21 @@ const difficulties = [
   { value: 'hard', label: '困难' }
 ]
 
-// 获取所有题库列表
-const availableBanks = computed(() => {
-  const banks = new Set(state.value.questions.map(q => q.bank || '未分类'))
-  return Array.from(banks).map(bank => ({
-    value: bank,
-    name: bank,
-    icon: bank === '测试题' ? '📝' : '📚',
-    count: state.value.questions.filter(q => (q.bank || '未分类') === bank).length
-  }))
+const banksIndex = ref<{ name: string; file: string }[]>([])
+const bankCounts = ref<Record<string, number>>({})
+const availableBanks = computed(() => banksIndex.value.map(b => ({
+  value: b.name,
+  name: b.name,
+  icon: '📚',
+  count: bankCounts.value[b.name] ?? 0,
+  file: b.file
+})))
+
+const canStart = computed(() => {
+  const name = selectedBank.value
+  if (!name) return false
+  const count = bankCounts.value[name] ?? 0
+  return count > 0
 })
 
 // 当前选中的题库名称
@@ -212,9 +218,12 @@ const selectBank = (bank: string) => {
 }
 
 // 开始答题
-const handleStart = () => {
-  if (filteredQuestions.value.length > 0) {
-    startQuiz(filteredQuestions.value, quizMode.value)
+const handleStart = async () => {
+  const bank = availableBanks.value.find(b => b.value === selectedBank.value)
+  if (!bank) return
+  const qs = await loadBankQuestions(bank.file)
+  if (qs.length > 0) {
+    startQuiz(qs.filter(q => selectedDifficulty.value === 'all' ? true : q.difficulty === selectedDifficulty.value), quizMode.value)
     router.push('/quiz')
   }
 }
@@ -253,7 +262,39 @@ const confirmDelete = () => {
 onMounted(async () => {
   isLoading.value = true
   try {
-    await loadQuestions()
+    try {
+      const r = await fetch('/data/banks.json?t=' + Date.now())
+      const j = await r.json()
+      if (Array.isArray(j?.banks)) {
+        banksIndex.value = j.banks
+        try {
+          const results = await Promise.all(j.banks.map(async (b: any) => {
+            try {
+              const rr = await fetch(b.file + '?t=' + Date.now())
+              const dd = await rr.json()
+              if (Array.isArray(dd?.questions)) {
+                const count = (dd.questions as any[]).flat(Infinity).filter((q: any) => q && typeof q === 'object').length
+                return { name: b.name, count }
+              } else if (Array.isArray(dd)) {
+                return { name: b.name, count: dd.length }
+              }
+            } catch { }
+            return { name: b.name, count: 0 }
+          }))
+          const map: Record<string, number> = {}
+          results.forEach((r: any) => { map[r.name] = r.count })
+          bankCounts.value = map
+        } catch { }
+      }
+    } catch { }
+    if (banksIndex.value.length === 0) {
+      await loadQuestions()
+      const banks = new Set(state.value.questions.map(q => q.bank || '未分类'))
+      banksIndex.value = Array.from(banks).map(name => ({ name, file: '/data/data.json' }))
+      const map: Record<string, number> = {}
+      Array.from(banks).forEach(name => { map[name] = state.value.questions.filter(q => (q.bank || '未分类') === name).length })
+      bankCounts.value = map
+    }
     // 默认选择第一个题库
     if (availableBanks.value.length > 0) {
       selectedBank.value = availableBanks.value[0].value
@@ -283,7 +324,7 @@ const checkSavedProgress = () => {
         practiceTotal.value = data.questions.length
       }
     }
-  } catch {}
+  } catch { }
   try {
     if (rawMemorize) {
       const data = JSON.parse(rawMemorize)
@@ -293,7 +334,7 @@ const checkSavedProgress = () => {
         memorizeTotal.value = data.questions.length
       }
     }
-  } catch {}
+  } catch { }
 }
 
 // 监听路由变化，返回首页时重新检查
@@ -314,23 +355,28 @@ onActivated(() => {
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
 .resume-grid.two {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+
 .resume-left {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
 .resume-right {
   display: flex;
   gap: 8px;
 }
+
 .resume-progress {
   margin-top: 8px;
 }
+
 .resume-progress-bar {
   width: 240px;
   height: 8px;
@@ -338,15 +384,18 @@ onActivated(() => {
   border-radius: 999px;
   overflow: hidden;
 }
+
 .resume-progress-fill {
   height: 100%;
   background: #111827;
 }
+
 .resume-progress-text {
   margin-top: 6px;
   font-size: 13px;
   color: #374151;
 }
+
 .page {
   min-height: 100vh;
   background: #f0f2f5;
@@ -729,6 +778,7 @@ onActivated(() => {
     align-items: flex-start;
     gap: 20px;
   }
+
   .resume-grid.two {
     grid-template-columns: 1fr;
     gap: 20px;
