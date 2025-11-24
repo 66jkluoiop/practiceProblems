@@ -128,7 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuiz } from '@/composables/useQuiz'
 import { useSwipe } from '@/composables/useSwipe'
@@ -400,6 +400,14 @@ onMounted(() => {
   loadCurrentAnswer()
 })
 
+const computeWindowSize = () => {
+  const w = window.innerWidth
+  return w < 500 ? 5 : totalPages.value
+}
+const updateWindow = () => { pageWindow.value = computeWindowSize() }
+onMounted(() => { updateWindow(); window.addEventListener('resize', updateWindow) })
+onUnmounted(() => { window.removeEventListener('resize', updateWindow) })
+
 const jumpTo = (i: number) => {
   goToQuestion(i)
   resetAnswer()
@@ -643,6 +651,22 @@ const handleBack = () => {
 
   .sidebar {
     padding-top: 0;
+  }
+
+  .pager {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .pager-col {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .pager-info {
+    text-align: center;
   }
 }
 </style>
