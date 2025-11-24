@@ -146,6 +146,17 @@ export function useQuiz() {
         saveProgress()
     }
 
+    const revealAnswer = () => {
+        const current = state.value.questions[state.value.currentIndex]
+        state.value.userAnswers.push({
+            questionIndex: state.value.currentIndex,
+            answer: current.answer as any,
+            isCorrect: false,
+            peeked: true
+        })
+        saveProgress()
+    }
+
     // 下一题
     const nextQuestion = () => {
         if (state.value.currentIndex < state.value.questions.length - 1) {
@@ -215,6 +226,7 @@ export function useQuiz() {
         submitAnswer,
         nextQuestion,
         prevQuestion,
+        revealAnswer,
         goToQuestion,
         finishQuiz,
         currentQuestion,

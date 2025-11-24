@@ -57,6 +57,7 @@
               <button class="btn btn-primary" @click="handleSubmit" :disabled="!hasAnswer">
                 提交答案
               </button>
+              <button class="btn btn-secondary" @click="handleReveal">显示答案</button>
               <button class="btn btn-secondary" @click="handleSkip" :disabled="isLastQuestion">
                 跳过 →
               </button>
@@ -74,6 +75,10 @@
             <div class="explanation-content">
               <h4>{{ isMemorizeMode ? '答案与解析' : '解析' }}</h4>
               <p>{{ currentQuestion.explanation }}</p>
+            </div>
+            <div v-if="currentQuestion.type === 'short' || currentQuestion.type === 'fill'" class="answer-block">
+              <h4>正确答案</h4>
+              <p>{{ formatTextAnswer(currentQuestion.answer) }}</p>
             </div>
           </div>
         </div>
@@ -98,7 +103,7 @@
         </div>
         <div class="number-grid">
           <button v-for="i in pageItems" :key="i" class="number-item"
-            :class="{ current: i === state.currentIndex, answered: isAnswered(i), correct: isCorrect(i), wrong: isWrong(i) }"
+            :class="{ current: i === state.currentIndex, answered: isAnswered(i), correct: isCorrect(i), wrong: isWrong(i), peeked: isPeeked(i) }"
             @click="jumpTo(i)">{{ i + 1 }}</button>
         </div>
       </aside>
@@ -111,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuiz } from '@/composables/useQuiz'
 import { useSwipe } from '@/composables/useSwipe'
@@ -120,7 +125,7 @@ import QuestionOption from '@/components/QuestionOption.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const router = useRouter()
-const { currentQuestion, progress, submitAnswer, nextQuestion, prevQuestion, finishQuiz, state, goToQuestion } = useQuiz()
+const { currentQuestion, progress, submitAnswer, nextQuestion, prevQuestion, finishQuiz, state, goToQuestion, revealAnswer, resumeQuiz } = useQuiz()
 
 // 确认对话框引用
 const confirmDialogRef = ref<InstanceType<typeof ConfirmDialog> | null>(null)
@@ -265,6 +270,24 @@ const handleSubmit = () => {
 
   showResult.value = true
 }
+const handleReveal = () => {
+  const ans = currentQuestion.value?.answer
+  if (Array.isArray(ans)) {
+    if (typeof ans[0] === 'number') {
+      selectedAnswers.value = [...(ans as number[])]
+    } else {
+      textAnswer.value = (ans as (string | number)[]).map(a => String(a)).join(', ')
+    }
+  } else {
+    if (typeof ans === 'number') {
+      selectedAnswer.value = ans
+    } else {
+      textAnswer.value = String(ans)
+    }
+  }
+  revealAnswer()
+  showResult.value = true
+}
 
 // 上一题
 const handlePrev = () => {
@@ -355,6 +378,15 @@ const loadCurrentAnswer = () => {
 const isAnswered = (i: number) => {
   return !!state.value.userAnswers.find(a => a.questionIndex === i)
 }
+const isPeeked = (i: number) => {
+  const a = state.value.userAnswers.find(u => u.questionIndex === i)
+  return !!a && !!a.peeked
+}
+
+onMounted(() => {
+  resumeQuiz()
+  loadCurrentAnswer()
+})
 
 const jumpTo = (i: number) => {
   goToQuestion(i)
@@ -370,6 +402,13 @@ const isCorrect = (i: number) => {
 const isWrong = (i: number) => {
   const a = state.value.userAnswers.find(u => u.questionIndex === i)
   return !!a && a.isCorrect === false
+}
+
+const formatTextAnswer = (ans: number | number[] | string | string[]) => {
+  if (Array.isArray(ans)) {
+    return (ans as (string | number)[]).map(a => String(a)).join(', ')
+  }
+  return String(ans)
 }
 
 // 显示确认对话框
@@ -485,10 +524,13 @@ const handleBack = () => {
   background: #f0fdf4;
   border-color: #22c55e;
 }
-
 .number-item.wrong {
   background: #fef2f2;
   border-color: #ef4444;
+}
+.number-item.peeked {
+  background: #fef3c7;
+  border-color: #f59e0b;
 }
 
 .text-answer {

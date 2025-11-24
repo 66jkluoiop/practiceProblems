@@ -15,6 +15,7 @@ export interface UserAnswer {
     questionIndex: number
     answer: number | number[] | string | string[]
     isCorrect: boolean
+    peeked?: boolean
 }
 
 export interface QuizState {

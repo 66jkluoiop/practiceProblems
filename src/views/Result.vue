@@ -49,7 +49,7 @@
               <div class="wrong-question">{{ item.question.question }}</div>
               <div class="wrong-answer">
                 <span class="label">你的答案：</span>
-                <span class="value wrong">{{ formatAnswer(item.userAnswer, item.question.options) }}</span>
+                <span class="value wrong">{{ item.peeked ? '查看了答案' : formatAnswer(item.userAnswer, item.question.options) }}</span>
               </div>
               <div class="correct-answer">
                 <span class="label">正确答案：</span>
@@ -129,7 +129,8 @@ const wrongQuestions = computed(() => {
     .map(a => ({
       questionIndex: a.questionIndex,
       question: state.value.questions[a.questionIndex],
-      userAnswer: a.answer
+      userAnswer: a.answer,
+      peeked: a.peeked === true
     }))
 })
 
