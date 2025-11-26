@@ -106,8 +106,26 @@ export function useQuiz() {
     }
     // 开始答题
     const startQuiz = (questions: Question[], mode: 'practice' | 'memorize' = 'practice') => {
+        const processed = mode === 'practice'
+            ? questions.map((q) => {
+                if ((q.type === 'single' || q.type === 'multiple') && Array.isArray(q.options) && q.options.length > 0) {
+                    const opts = q.options as string[]
+                    const order = Array.from({ length: opts.length }, (_, i) => i)
+                    for (let i = order.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1))
+                        const tmp = order[i]; order[i] = order[j]; order[j] = tmp
+                    }
+                    const newOptions = order.map(i => opts[i])
+                    let newAnswer: number | number[] = Array.isArray(q.answer)
+                        ? (q.answer as number[]).map(ai => order.findIndex(x => x === ai))
+                        : order.findIndex(x => x === (q.answer as number))
+                    return { ...q, options: newOptions, answer: newAnswer }
+                }
+                return q
+            })
+            : questions
         state.value = {
-            questions,
+            questions: processed,
             currentIndex: 0,
             userAnswers: [],
             startTime: Date.now(),

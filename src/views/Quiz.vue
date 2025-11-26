@@ -36,8 +36,8 @@
           <div v-else class="text-answer">
             <textarea v-if="currentQuestion.type === 'short'" class="short-input" v-model="textAnswer"
               :disabled="showResult || isMemorizeMode" rows="4" placeholder="请输入答案"></textarea>
-            <input v-else class="fill-input" v-model="textAnswer" :disabled="showResult || isMemorizeMode"
-              placeholder="请输入填空答案" />
+            <textarea v-else class="fill-input fill-textarea" v-model="textAnswer"
+              :disabled="showResult || isMemorizeMode" rows="3" placeholder="请输入填空答案"></textarea>
           </div>
 
           <div class="actions">
@@ -78,7 +78,7 @@
             </div>
             <div v-if="currentQuestion.type === 'short' || currentQuestion.type === 'fill'" class="answer-block">
               <h4>正确答案</h4>
-              <p>{{ formatTextAnswer(currentQuestion.answer) }}</p>
+              <p class="answer-text">{{ formatTextAnswer(currentQuestion.answer) }}</p>
             </div>
           </div>
         </div>
@@ -288,7 +288,7 @@ const handleReveal = () => {
     if (typeof ans[0] === 'number') {
       selectedAnswers.value = [...(ans as number[])]
     } else {
-      textAnswer.value = (ans as (string | number)[]).map(a => String(a)).join(', ')
+      textAnswer.value = (ans as (string | number)[]).map(a => String(a)).join('\n')
     }
   } else {
     if (typeof ans === 'number') {
@@ -350,7 +350,7 @@ const loadCurrentAnswer = () => {
         if (typeof userAnswer.answer[0] === 'number') {
           selectedAnswers.value = [...(userAnswer.answer as number[])]
         } else {
-          textAnswer.value = String((userAnswer.answer as string[])[0] ?? '')
+          textAnswer.value = (userAnswer.answer as (string | number)[]).map(a => String(a)).join('\n')
         }
       } else {
         if (typeof userAnswer.answer === 'number') {
@@ -362,12 +362,15 @@ const loadCurrentAnswer = () => {
       showResult.value = true
       isAnswerCorrect.value = userAnswer.isCorrect
     } else if (isMemorizeMode.value && currentQuestion.value) {
+      if (!state.value.userAnswers.find(a => a.questionIndex === currentIndex)) {
+        revealAnswer()
+      }
       const correctAnswer = currentQuestion.value.answer
       if (Array.isArray(correctAnswer)) {
         if (typeof correctAnswer[0] === 'number') {
           selectedAnswers.value = [...(correctAnswer as number[])]
         } else {
-          textAnswer.value = String((correctAnswer as string[])[0] ?? '')
+          textAnswer.value = (correctAnswer as (string | number)[]).map(a => String(a)).join('\n')
         }
       } else {
         if (typeof correctAnswer === 'number') {
@@ -426,7 +429,7 @@ const isWrong = (i: number) => {
 
 const formatTextAnswer = (ans: number | number[] | string | string[]) => {
   if (Array.isArray(ans)) {
-    return (ans as (string | number)[]).map(a => String(a)).join(', ')
+    return (ans as (string | number)[]).map(a => String(a)).join('\n')
   }
   return String(ans)
 }
@@ -636,6 +639,17 @@ const handleBack = () => {
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 10px;
+}
+
+.fill-textarea {
+  white-space: pre-wrap;
+  word-break: break-word;
+  resize: vertical;
+}
+
+.answer-text {
+  white-space: pre-line;
+  line-height: 1.6;
 }
 
 @media (max-width: 992px) {

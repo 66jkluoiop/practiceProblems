@@ -138,9 +138,9 @@ const wrongQuestions = computed(() => {
 const formatAnswer = (answer: number | number[] | string | string[], options?: string[]) => {
   if (Array.isArray(answer)) {
     if (typeof answer[0] === 'number' && options) {
-      return (answer as number[]).map(i => `${String.fromCharCode(65 + i)}. ${options[i]}`).join(', ')
+      return (answer as number[]).map(i => `${String.fromCharCode(65 + i)}. ${options[i]}`).join('\n')
     }
-    return (answer as (string | number)[]).map(a => String(a)).join(', ')
+    return (answer as (string | number)[]).map(a => String(a)).join('\n')
   }
   if (typeof answer === 'number') {
     return options ? `${String.fromCharCode(65 + answer)}. ${options[answer]}` : String(answer)
@@ -154,3 +154,8 @@ const handleRetry = () => {
   router.push('/quiz')
 }
 </script>
+<style scoped>
+.value {
+  white-space: pre-line;
+}
+</style>

@@ -683,20 +683,20 @@ onActivated(() => {
   max-width: 400px;
   margin: 0 auto;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--color-primary);
+  color: #fff;
   border: none;
   border-radius: 12px;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.15);
 }
 
 .start-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 32px rgba(17, 24, 39, 0.2);
 }
 
 .start-btn:disabled {
@@ -782,6 +782,137 @@ onActivated(() => {
   .start-btn {
     width: 100%;
     max-width: none;
+  }
+}
+
+/* ==== 现代化视觉升级（覆盖现有样式，保留结构） ==== */
+:global(:root) {
+  --color-bg: #f7f9fb;
+  --color-card: #ffffff;
+  --color-border: #e5e7eb;
+  --color-text: #111827;
+  --color-muted: #6b7280;
+  --color-primary: #111827;
+  --radius-lg: 16px;
+  --radius: 12px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+:global(html) {
+  scroll-behavior: smooth;
+}
+
+:global(body) {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Microsoft YaHei", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  background: var(--color-bg);
+}
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-title {
+  color: var(--color-text);
+  letter-spacing: 0.2px;
+}
+
+.desc {
+  color: var(--color-muted);
+}
+
+.header-actions {
+  gap: 10px;
+}
+
+.header-link {
+  border-color: var(--color-border);
+  background: var(--color-card);
+}
+
+.header-link:hover {
+  border-color: #d1d5db;
+  background: #f8fafb;
+}
+
+.dropdown-trigger,
+.radio-item,
+.tag {
+  background: #fafafa;
+  border-color: var(--color-border);
+}
+
+.dropdown-trigger:hover,
+.radio-item:hover,
+.tag:hover {
+  background: #ffffff;
+}
+
+.resume-card {
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.resume-progress-bar {
+  background: var(--color-border);
+}
+
+.resume-progress-fill {
+  background: var(--color-primary);
+}
+
+/* 细微过渡 */
+.card,
+.header-link,
+.dropdown-trigger,
+.radio-item,
+.tag,
+.start-btn {
+  transition: background-color .15s ease, box-shadow .2s ease, transform .15s ease;
+}
+
+/* 布局断点优化 */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-link {
+    width: auto;
+  }
+}
+
+/* 非关键动画优化：降低动效在低性能设备的影响 */
+@media (prefers-reduced-motion: reduce) {
+
+  .card,
+  .header-link,
+  .start-btn {
+    transition: none;
   }
 }
 

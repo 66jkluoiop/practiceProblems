@@ -3348,6 +3348,306 @@
                 "explanation": "意向锁是多粒度封锁中的重要机制，显著提高了系统性能。",
                 "difficulty": "hard",
                 "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在SQL中，使用______语句可以对查询结果加排他锁，防止其他事务读取或修改数据。",
+                "options": [],
+                "answer": "SELECT ... FOR UPDATE",
+                "explanation": "SELECT ... FOR UPDATE语句在查询数据时对其加排他锁，其他事务不能读取或修改这些数据。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在MySQL中，使用______语句可以在读取数据时加共享锁，允许其他事务读但不允许修改。",
+                "options": [],
+                "answer": "SELECT ... LOCK IN SHARE MODE",
+                "explanation": "SELECT ... LOCK IN SHARE MODE语句对读取的数据加共享锁，其他事务可以读但不能修改这些数据。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "要显式开始一个事务，可以使用______语句。",
+                "options": [],
+                "answer": "BEGIN TRANSACTION 或 START TRANSACTION",
+                "explanation": "BEGIN TRANSACTION或START TRANSACTION语句用于显式开始一个事务。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "提交事务并使所有修改永久生效的SQL语句是______。",
+                "options": [],
+                "answer": "COMMIT",
+                "explanation": "COMMIT语句提交事务，使所有修改永久生效。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "回滚事务并撤销所有未提交修改的SQL语句是______。",
+                "options": [],
+                "answer": "ROLLBACK",
+                "explanation": "ROLLBACK语句回滚事务，撤销所有未提交的修改。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在事务中，如果要设置保存点以便部分回滚，可以使用______语句。",
+                "options": [],
+                "answer": "SAVEPOINT",
+                "explanation": "SAVEPOINT语句设置保存点，可以在事务中部分回滚到指定保存点。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "要回滚到特定保存点而不是整个事务，可以使用______语句。",
+                "options": [],
+                "answer": "ROLLBACK TO SAVEPOINT",
+                "explanation": "ROLLBACK TO SAVEPOINT语句回滚到指定的保存点，而不是回滚整个事务。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在SQL Server中，使用______提示可以在SELECT语句中强制使用排他锁。",
+                "options": [],
+                "answer": "WITH (XLOCK)",
+                "explanation": "WITH (XLOCK)提示在SQL Server中强制对查询的数据加排他锁。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在Oracle中，使用______语句可以显式对表加排他锁。",
+                "options": [],
+                "answer": "LOCK TABLE ... IN EXCLUSIVE MODE",
+                "explanation": "LOCK TABLE ... IN EXCLUSIVE MODE语句在Oracle中对表加排他锁。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "要设置事务的隔离级别为可重复读，可以使用______语句。",
+                "options": [],
+                "answer": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+                "explanation": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ语句设置事务隔离级别为可重复读。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在PostgreSQL中，使用______语句可以防止在并发更新时的丢失修改问题。",
+                "options": [],
+                "answer": "SELECT ... FOR UPDATE",
+                "explanation": "SELECT ... FOR UPDATE语句在PostgreSQL中对查询的数据加排他锁，防止丢失修改。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "要释放事务中设置的所有保存点，可以使用______语句。",
+                "options": [],
+                "answer": "RELEASE SAVEPOINT",
+                "explanation": "RELEASE SAVEPOINT语句释放指定的保存点，在PostgreSQL等数据库中支持。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在MySQL中，设置事务自动提交模式的语句是______。",
+                "options": [],
+                "answer": "SET autocommit = 0 或 SET autocommit = 1",
+                "explanation": "SET autocommit = 0关闭自动提交，SET autocommit = 1开启自动提交。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在SQL Server中，使用______提示可以在SELECT语句中跳过被锁定的行。",
+                "options": [],
+                "answer": "WITH (NOLOCK)",
+                "explanation": "WITH (NOLOCK)提示在SQL Server中允许读取未提交的数据，跳过被锁定的行。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "要设置数据库的默认隔离级别，可以使用______语句。",
+                "options": [],
+                "answer": "ALTER DATABASE ... SET DEFAULT_TRANSACTION_ISOLATION",
+                "explanation": "ALTER DATABASE语句可以设置数据库的默认事务隔离级别。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "为了防止丢失修改，事务T1在更新账户余额前应该使用：SELECT ______ FROM accounts WHERE account_id = 123 ______",
+                "options": [],
+                "answer": "balance, FOR UPDATE",
+                "explanation": "SELECT balance FROM accounts WHERE account_id = 123 FOR UPDATE 会对查询的数据加排他锁，防止其他事务同时修改相同数据。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在可重复读隔离级别下读取产品信息：SET TRANSACTION ______ LEVEL ______; SELECT * FROM products WHERE product_id = 456",
+                "options": [],
+                "answer": "ISOLATION, REPEATABLE READ",
+                "explanation": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ 设置事务隔离级别为可重复读，保证在事务期间读取的数据不会改变。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "显式开始事务并更新库存：______; UPDATE inventory SET quantity = quantity - 1 WHERE item_id = 789",
+                "options": [],
+                "answer": "BEGIN TRANSACTION",
+                "explanation": "BEGIN TRANSACTION 显式开始一个事务，后续的UPDATE操作将在事务中执行。",
+                "difficulty": "easy",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在MySQL中读取数据并加共享锁：SELECT product_name, price FROM products WHERE category = 'electronics' ______",
+                "options": [],
+                "answer": "LOCK IN SHARE MODE",
+                "explanation": "LOCK IN SHARE MODE 对读取的数据加共享锁，允许其他事务读但不允许修改。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "设置保存点并执行部分回滚：SAVEPOINT ______; DELETE FROM orders WHERE status = 'pending'; ______ before_delete",
+                "options": [],
+                "answer": "before_delete, ROLLBACK TO",
+                "explanation": "SAVEPOINT before_delete 设置保存点，ROLLBACK TO before_delete 回滚到保存点，撤销DELETE操作。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在SQL Server中使用排他锁提示：SELECT customer_name, balance FROM customers WITH(______) WHERE customer_id = 1001",
+                "options": [],
+                "answer": "XLOCK",
+                "explanation": "WITH(XLOCK) 提示强制对查询的数据加排他锁。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "完整的银行转账事务：______; UPDATE accounts SET balance = balance - 100 WHERE account_id = 'A'; UPDATE accounts SET balance = balance + 100 WHERE account_id = 'B'; ______",
+                "options": [],
+                "answer": "BEGIN TRANSACTION, COMMIT",
+                "explanation": "BEGIN TRANSACTION 开始事务，COMMIT 提交事务，确保两个UPDATE操作要么都执行要么都不执行。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在Oracle中对表加排他锁：______ TABLE employees ______ EXCLUSIVE MODE",
+                "options": [],
+                "answer": "LOCK, IN",
+                "explanation": "LOCK TABLE employees IN EXCLUSIVE MODE 对整个employees表加排他锁。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "设置序列化隔离级别并查询：SET TRANSACTION ISOLATION LEVEL ______; SELECT COUNT(*) FROM orders WHERE order_date >= '2024-01-01'",
+                "options": [],
+                "answer": "SERIALIZABLE",
+                "explanation": "SERIALIZABLE 是最严格的隔离级别，完全保证事务的隔离性。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在PostgreSQL中防止幻读：BEGIN; ______; SELECT * FROM products WHERE price > 100 ______; COMMIT",
+                "options": [],
+                "answer": "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE, FOR UPDATE",
+                "explanation": "序列化隔离级别配合FOR UPDATE可以防止幻读问题。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "关闭自动提交并执行多个操作：SET ______ = 0; INSERT INTO log_table VALUES ('action1'); INSERT INTO log_table VALUES ('action2'); ______",
+                "options": [],
+                "answer": "autocommit, COMMIT",
+                "explanation": "SET autocommit = 0 关闭自动提交，多个INSERT操作在一个事务中执行，COMMIT提交所有更改。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在SQL Server中读取未提交的数据：SELECT order_id, total_amount FROM orders ______ WHERE customer_id = 500",
+                "options": [],
+                "answer": "WITH (NOLOCK)",
+                "explanation": "WITH (NOLOCK) 提示允许读取未提交的数据，跳过被锁定的行，但可能读到脏数据。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "设置读已提交隔离级别：______ ISOLATION LEVEL ______",
+                "options": [],
+                "answer": "SET TRANSACTION, READ COMMITTED",
+                "explanation": "SET TRANSACTION ISOLATION LEVEL READ COMMITTED 设置隔离级别为读已提交，防止读脏数据。",
+                "difficulty": "medium",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "开始事务、设置保存点、执行操作并选择性回滚：BEGIN TRANSACTION; ______ sp1; DELETE FROM temp_data; ______ sp1; COMMIT",
+                "options": [],
+                "answer": "SAVEPOINT, ROLLBACK TO",
+                "explanation": "SAVEPOINT sp1 设置保存点，ROLLBACK TO sp1 回滚到保存点，撤销DELETE操作。",
+                "difficulty": "hard",
+                "status": "active"
+            },
+            {
+                "category": "数据库原理",
+                "type": "fill",
+                "question": "在MySQL中检查自动提交状态：SELECT ______;",
+                "options": [],
+                "answer": "@@autocommit",
+                "explanation": "SELECT @@autocommit 查询当前自动提交的设置状态。",
+                "difficulty": "medium",
+                "status": "active"
             }
         ]
     ]
