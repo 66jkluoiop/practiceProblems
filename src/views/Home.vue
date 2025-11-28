@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <LoadingSpinner v-if="isLoading" isOverlay />
-    <div class="wrapper" :class="{ 'content-loading': isLoading }">
+  <div class="wrapper" :class="{ 'content-loading': isLoading }">
       <!-- 头部 -->
       <div class="header">
         <div class="header-content">
@@ -17,7 +17,18 @@
         </div>
       </div>
       <div class="resume-grid" :class="{ two: practiceSaved && memorizeSaved }">
-        <!-- 继续练习 -->
+      <div class="stats-board">
+        <div class="stats-item">
+          <div class="stats-label">总访问人数</div>
+          <div class="stats-value">{{ totalVisitors }}</div>
+        </div>
+        <div class="stats-item">
+          <div class="stats-label">今日访问人数</div>
+          <div class="stats-value">{{ dailyVisitors }}</div>
+        </div>
+      </div>
+
+      <!-- 继续练习 -->
         <div v-if="practiceSaved" class="resume-card">
           <div class="resume-left">
             <div>
@@ -123,6 +134,7 @@ import { ref, computed, onMounted, onActivated } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuiz } from '@/composables/useQuiz'
 import { useWrongQuestions } from '@/composables/useWrongQuestions'
+import { useVisitorStats } from '@/composables/useVisitorStats'
 import { useDarkMode } from '@/composables/useDarkMode'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
@@ -131,6 +143,7 @@ const router = useRouter()
 const { state, loadQuestions, startQuiz, resumeByMode, clearProgress, loadBankQuestions } = useQuiz()
 const { wrongQuestions } = useWrongQuestions()
 const { isDark, toggleDarkMode } = useDarkMode()
+const { totalVisitors, dailyVisitors } = useVisitorStats()
 
 // 加载状态
 const isLoading = ref(true)
@@ -334,6 +347,21 @@ onActivated(() => {
 </script>
 
 <style scoped>
+.stats-board {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stats-item {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+}
+.stats-label { color: var(--color-muted); font-size: 12px; }
+.stats-value { color: var(--color-text); font-size: 22px; font-weight: 700; }
 .resume-card {
   display: flex;
   align-items: center;
