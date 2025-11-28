@@ -1,6 +1,6 @@
 <template>
     <div class="wrong-questions-page">
-        <LoadingSpinner v-if="isLoading" isOverlay />
+        <!-- <LoadingSpinner v-if="isLoading" isOverlay /> -->
         <div class="wrapper" :class="{ 'content-loading': isLoading }">
             <!-- 头部 -->
             <div class="header">
@@ -77,7 +77,7 @@ import { useRouter } from 'vue-router'
 import { useWrongQuestions } from '@/composables/useWrongQuestions'
 import { useQuiz } from '@/composables/useQuiz'
 import WrongQuestionCard from '@/components/WrongQuestionCard.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+// import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const router = useRouter()
 const {

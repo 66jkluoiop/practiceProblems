@@ -1,6 +1,6 @@
 <template>
   <div class="quiz" v-if="currentQuestion" ref="quizContainer">
-    <LoadingSpinner v-if="isLoading" isOverlay />
+    <!-- <LoadingSpinner v-if="isLoading" isOverlay /> -->
     <header class="quiz-header">
       <button class="back-btn" @click="showConfirmDialog">返回</button>
       <div class="mode-badge" :class="`mode-${state.mode}`">
@@ -134,7 +134,7 @@ import { useQuiz } from '@/composables/useQuiz'
 import { useSwipe } from '@/composables/useSwipe'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import QuestionOption from '@/components/QuestionOption.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+// import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const router = useRouter()
 const { currentQuestion, progress, submitAnswer, nextQuestion, prevQuestion, finishQuiz, state, goToQuestion, revealAnswer, resumeQuiz } = useQuiz()

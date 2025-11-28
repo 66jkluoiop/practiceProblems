@@ -1,6 +1,6 @@
 <template>
     <div class="statistics-page">
-        <LoadingSpinner v-if="isLoading" isOverlay />
+        <!-- <LoadingSpinner v-if="isLoading" isOverlay /> -->
         <div class="wrapper" :class="{ 'content-loading': isLoading }">
             <!-- 头部 -->
             <div class="header">
@@ -129,7 +129,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStudyStats } from '@/composables/useStudyStats'
 import StatCard from '@/components/StatCard.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+// import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const router = useRouter()
 const { stats, difficultyAccuracy, clearStats, formatTime } = useStudyStats()
